@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 
 function getWindowDimensions() {
-  const { visualViewport: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
+    const { visualViewport: width, innerHeight: height } = typeof window !== 'undefined' ? window : global;
+    return {
+      width,
+      height
+    }
 }
 
 export default function useWindowDimensions() {
@@ -18,8 +18,14 @@ export default function useWindowDimensions() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    } else {
+      global.addEventListener('resize', handleResize);
+      return () => global.removeEventListener('resize', handleResize);
+    }
+
   }, []);
 
   return windowDimensions;

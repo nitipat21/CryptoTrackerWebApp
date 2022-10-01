@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 
 const Home: NextPage = () => {
   return (
-    <Layout title="CryptoTracker">
+    <Layout title="CurrencyTracker">
       <main>
         <p>Content</p>
       </main>
