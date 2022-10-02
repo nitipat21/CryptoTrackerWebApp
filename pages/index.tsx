@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
-import CryptoHero from '../components/CryptoHero';
+import Hero from '../components/Hero';
 import Layout from '../components/Layout'
 
 const Home: NextPage = () => {
   return (
     <Layout title="CryptoTracker">
       <main className="min-h-screen">
-        <CryptoHero/>
+        <Hero/>
       </main>
     </Layout>
   )

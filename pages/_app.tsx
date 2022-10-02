@@ -7,18 +7,26 @@ import '@fortawesome/free-regular-svg-icons'
 import '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react';
+import { wrapper } from '../store/store';
+import { Provider } from "react-redux";
 
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
 
+  const { store, props } = wrapper.useWrappedStore(pageProps);
+  
   const [pageLoaded, setPageLoaded] = useState<boolean>(false);
 
   useEffect(()=>{
     setPageLoaded(true);
   },[])
 
-  return pageLoaded ? <Component {...pageProps} /> : null;
+  return pageLoaded ?
+  <Provider store={store}>
+    <Component {...props.pageProps} />
+  </Provider> 
+  : null;
 }
 
-export default MyApp
+export default MyApp;
