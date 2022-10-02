@@ -6,11 +6,19 @@ import '@fortawesome/free-brands-svg-icons'
 import '@fortawesome/free-regular-svg-icons'
 import '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react';
 
 config.autoAddCss = false;
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+
+  const [pageLoaded, setPageLoaded] = useState<boolean>(false);
+
+  useEffect(()=>{
+    setPageLoaded(true);
+  },[])
+
+  return pageLoaded ? <Component {...pageProps} /> : null;
 }
 
 export default MyApp
