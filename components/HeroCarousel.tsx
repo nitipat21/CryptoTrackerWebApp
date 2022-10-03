@@ -26,8 +26,9 @@ const HeroCarousel = () => {
             md:w-1/4
             lg:w-1/5
             h-full">
+                <div className="font-bold opacity-60 text-lg">{index + 1}</div>
                 <div className="p-4">
-                    <img className="w-[120px] h-full" src={coin.image} alt={coin.name}/>
+                    <img className="w-[120px] h-full aspect-square object-cover" src={coin.image} alt={coin.name}/>
                 </div>
                 <div>
                     <span className="mr-1 text-neutral-300">
@@ -59,7 +60,8 @@ const HeroCarousel = () => {
         <div className="overflow-hidden">
             <div className="
             relative 
-            overflow-x-auto 
+            overflow-x-auto
+            overscroll-contain 
             flex 
             items-baseline 
             snap-mandatory 

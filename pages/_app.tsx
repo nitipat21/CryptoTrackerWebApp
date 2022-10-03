@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return pageLoaded ?
   <Provider store={store}>
-    <Component {...props.pageProps} />
+    <Component {...props} />
   </Provider> 
   : null;
 }

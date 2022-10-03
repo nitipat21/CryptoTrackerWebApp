@@ -5,11 +5,15 @@ import { AppState } from "./store"
 // type of state
 export interface cryptoState{
     currency:string;
+    dataUSD: any[];
+    dataAUD: any[];
 }
 
 // initial state
 const initialState: cryptoState = {
     currency: "USD",
+    dataUSD: [],
+    dataAUD: [],
 }
 
 // actual slice
