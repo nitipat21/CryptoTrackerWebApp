@@ -9,7 +9,7 @@ export interface cryptoState{
 
 // initial state
 const initialState: cryptoState = {
-    currency: "AUD",
+    currency: "USD",
 }
 
 // actual slice

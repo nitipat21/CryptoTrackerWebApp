@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from "./Sidebar";
 import { useState } from "react";
-import Link from "next/link";
 
 const Navbar = () => {
 
@@ -12,7 +11,7 @@ const Navbar = () => {
     const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
 
     return (
-        <nav className="bg-neutral-900 sticky">
+        <nav className="sticky">
             <div className="flex justify-between items-center px-4 py-4">
                 <div className="flex gap-8 items-center">
                     <h1 className="font-bold text-lg">CryptoTracker</h1>

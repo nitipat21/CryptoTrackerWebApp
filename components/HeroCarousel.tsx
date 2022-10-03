@@ -11,7 +11,7 @@ const HeroCarousel = () => {
     const [trending, setTrending] = useState([]);
 
     const itemElements = trending.map((coin:any, index:number) => {
-        console.log(coin)
+        const trend24h = coin.market_cap_change_percentage_24h;
 
         return (
             <div key={index} className="
@@ -24,30 +24,28 @@ const HeroCarousel = () => {
             w-1/2
             sm:w-1/3
             md:w-1/4
+            lg:w-1/5
             h-full">
                 <div className="p-4">
-                    <img className="w-full h-full aspect-square" src={coin.image} alt={coin.name}/>
+                    <img className="w-[120px] h-full" src={coin.image} alt={coin.name}/>
                 </div>
                 <div>
-                    <span className="m-1">{coin.symbol.toUpperCase()}</span>
-                    <span>{coin.market_cap_change_percentage_24h}</span>
+                    <span className="mr-1 text-neutral-300">
+                        {coin.symbol.toUpperCase()}
+                    </span>
+                    <span className={`${trend24h > 0 ? "text-green-600" : "text-red-600" }`}>
+                        {trend24h > 0 && "+"}
+                        {coin.market_cap_change_percentage_24h.toFixed(2)}
+                        {"%"}
+                    </span>
                 </div>
-                <div>
-                    <span>$</span>
-                    <span>{coin.current_price.toFixed(2)}</span>
+                <div className="text-lg">
+                    <span className="mr-1">{currency === "USD" ? "$" : "AU$"}</span>
+                    <span >{coin.current_price.toFixed(2)}</span>
                 </div>
             </div>
         );
     })
-
-    const responsive = {
-        0: {
-          items: 2,
-        },
-        512: {
-          items: 4,
-        },
-      };
 
     useEffect(() => {
         (async () => {
@@ -59,7 +57,14 @@ const HeroCarousel = () => {
 
     return (
         <div className="overflow-hidden">
-            <div className="relative overflow-x-scroll flex items-baseline snap-mandatory snap-x">
+            <div className="
+            relative 
+            overflow-x-auto 
+            flex 
+            items-baseline 
+            snap-mandatory 
+            snap-x 
+            py-8">
                 {itemElements}
             </div>
         </div>
