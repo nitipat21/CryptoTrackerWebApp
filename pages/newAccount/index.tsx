@@ -4,7 +4,7 @@ import SignUpForm from "../../components/signupForm";
 const Login = () => {
     return (
         <Layout title="Home">
-            <div>
+            <div className="bg-neutral-800">
                 <SignUpForm/>
             </div>
         </Layout>

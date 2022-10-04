@@ -19,7 +19,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div>
-                    <div className="hidden justify-center gap-8 md:flex">
+                    <div className="hidden items-center justify-center gap-8 md:flex">
                         <div>
                             <Link href={('/tracker')}>
                                 <button>Tracker</button>
@@ -30,7 +30,7 @@ const Navbar = () => {
                                 <button>Log in</button>
                             </Link>
                         </div>
-                        <div>
+                        <div className='border-2 border-solid border-purple-400 p-3 rounded-xl'>
                             <Link href={('/newAccount')}>
                                 <button>Create You Account</button>
                             </Link>
