@@ -33,7 +33,7 @@ const HeroCarousel = () => {
                     <span className="mr-1 text-neutral-300">
                         {coin.symbol.toUpperCase()}
                     </span>
-                    <span className={`${trend24h > 0 ? "text-green-600" : "text-red-600" }`}>
+                    <span className={`${trend24h > 0 ? "text-green-400" : "text-red-400" }`}>
                         {trend24h > 0 && "+"}
                         {coin.market_cap_change_percentage_24h.toFixed(2)}
                         {"%"}

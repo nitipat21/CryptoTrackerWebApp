@@ -6,12 +6,14 @@ import { AppState } from "./store"
 export interface cryptoState{
     coinList:any[];
     trendingList:any[];
+    filter:string;
 }
 
 // initial state
 const initialState: cryptoState = {
     coinList: [],
     trendingList: [],
+    filter:"marketCap",
 }
 
 // actual slice
@@ -20,10 +22,13 @@ export const cryptoSlice = createSlice({
     initialState:initialState,
     reducers: {
         setCoinList: (state, action) => {
-          state.coinList = action.payload
+          state.coinList = action.payload;
         },
         setTrendingList: (state, action) => {
-          state.trendingList = action.payload
+          state.trendingList = action.payload;
+        },
+        setFilter: (state, action) => {
+          state.filter = action.payload;
         }
     },
     extraReducers: {

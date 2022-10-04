@@ -9,7 +9,7 @@ const Tracker = () => {
                         <span className="text-[1.5rem] lg:text-[2rem]">Cryptocurrency By </span>
                         <span>
                             <div>
-                                <select className="bg-neutral-600 p-2 rounded-lg text-lg lg:text-2xl">
+                                <select className="bg-neutral-800 p-2 rounded-lg text-lg lg:text-2xl">
                                     <option value="marketCap">Market Cap</option>
                                     <option value="24hChange">24h Change</option>
                                     <option value="price">Price</option>

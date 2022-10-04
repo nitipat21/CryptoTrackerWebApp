@@ -26,12 +26,12 @@ const Navbar = () => {
                             </Link>
                         </div>
                         <div>
-                            <Link href={('/')}>
+                            <Link href={('/login')}>
                                 <button>Log in</button>
                             </Link>
                         </div>
                         <div>
-                            <Link href={('/')}>
+                            <Link href={('/newAccount')}>
                                 <button>Create You Account</button>
                             </Link>
                         </div>
