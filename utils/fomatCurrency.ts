@@ -1,5 +1,5 @@
-const formatMoney = (number:number, currency:string) => {
-    return number.toLocaleString('en-US', { style: 'currency', currency: currency });
+const formatMoney = (number:number) => {
+    return number.toLocaleString('en-US', { style: 'currency', currency: "aud" });
 };
 
 export default formatMoney;

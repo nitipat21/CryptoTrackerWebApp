@@ -1,17 +1,13 @@
-import { selectCurrencyState } from "../store/cryptoSlice";
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { TrendingCoins } from "../cryptoAPI/api";
 import formatMoney from "../utils/fomatCurrency";
+import { useSelector } from "react-redux";
+import { selectTrendingListState } from "../store/cryptoSlice";
 
 const HeroCarousel = () => {
 
-    const currency = useSelector(selectCurrencyState);
+    const trendingList = useSelector(selectTrendingListState);
 
-    const [trending, setTrending] = useState([]);
+    const itemElements = trendingList.map((coin:any, index:number) => {
 
-    const itemElements = trending.map((coin:any, index:number) => {
         const trend24h = coin.market_cap_change_percentage_24h;
 
         return (
@@ -26,7 +22,9 @@ const HeroCarousel = () => {
             sm:w-1/3
             md:w-1/4
             lg:w-1/5
-            h-full">
+            h-full
+            py-8
+            bg-neutral-900">
                 <div className="font-bold opacity-60 text-lg">{index + 1}</div>
                 <div className="p-4">
                     <img className="w-[120px] h-full aspect-square object-cover" src={coin.image} alt={coin.name}/>
@@ -42,18 +40,11 @@ const HeroCarousel = () => {
                     </span>
                 </div>
                 <div className="text-lg">
-                    <span >{formatMoney(coin.current_price, currency)}</span>
+                    <span >{formatMoney(coin.current_price)}</span>
                 </div>
             </div>
         );
     })
-
-    useEffect(()=>{
-        (async function fetchData () {
-            const { data } = await axios.get(TrendingCoins(currency));
-            setTrending(data);
-        })();
-    },[currency])
 
     return (
         <div className="overflow-hidden">

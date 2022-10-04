@@ -4,12 +4,14 @@ import { AppState } from "./store"
 
 // type of state
 export interface cryptoState{
-    currency:string;
+    coinList:any[];
+    trendingList:any[];
 }
 
 // initial state
 const initialState: cryptoState = {
-    currency: "USD",
+    coinList: [],
+    trendingList: [],
 }
 
 // actual slice
@@ -17,9 +19,12 @@ export const cryptoSlice = createSlice({
     name: "crypto",
     initialState:initialState,
     reducers: {
-        setCurrency: (state, action) => {
-            state.currency = action.payload;
+        setCoinList: (state, action) => {
+          state.coinList = action.payload
         },
+        setTrendingList: (state, action) => {
+          state.trendingList = action.payload
+        }
     },
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -31,6 +36,8 @@ export const cryptoSlice = createSlice({
     },
 })
 
-export const selectCurrencyState = (state:AppState) => state.crypto.currency;
+export const selectCoinListState = (state:AppState) => state.crypto.coinList;
+
+export const selectTrendingListState = (state:AppState) => state.crypto.trendingList;
 
 export default cryptoSlice.reducer;
