@@ -10,22 +10,30 @@ const Navbar = () => {
 
     return (
         <nav className="sticky bg-neutral-900">
-            <div className="flex justify-between items-center px-4 py-4 relative">
+            <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 relative">
                 <div className="flex gap-2">
                     <div className="flex gap-8 items-center">
-                        <Link href={('/')} className="font-bold text-lg">CryptoTracker</Link>
+                        <Link href={('/')} className="font-bold text-lg">
+                            <button>CryptoTracker</button>
+                        </Link>
                     </div>
                 </div>
                 <div>
                     <div className="hidden justify-center gap-8 md:flex">
                         <div>
-                            <button>Tracker</button>
+                            <Link href={('/tracker')}>
+                                <button>Tracker</button>
+                            </Link>
                         </div>
                         <div>
-                            <button>Log in</button>
+                            <Link href={('/')}>
+                                <button>Log in</button>
+                            </Link>
                         </div>
                         <div>
-                            <button>Create You Account</button>
+                            <Link href={('/')}>
+                                <button>Create You Account</button>
+                            </Link>
                         </div>
                     </div>
                     <div className="md:hidden">

@@ -2,8 +2,8 @@ import ResultTable from "./ResultTable"
 
 const Tracker = () => {
     return (
-        <div className="px-4 sm:px-8 lg:px-16 max-w-[1440px] m-auto">
-            <div className="grid gap-8 p-8 lg:p-8 rounded-lg">
+        <div className="px-4 sm:px-16 lg:px-32 py-8 max-w-[1440px] m-auto">
+            <div className="grid gap-8 rounded-lg">
                 <div>
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">
                         <span className="text-[1.5rem] lg:text-[2rem]">Cryptocurrency By </span>
@@ -33,7 +33,7 @@ const Tracker = () => {
                     rounded-lg"
                     ></input>
                 </div>
-                <div>
+                <div className="overflow-x-auto">
                     <ResultTable/>
                 </div>
             </div>

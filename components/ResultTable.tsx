@@ -10,8 +10,8 @@ const ResultTable = () => {
         const trend24h = coin.market_cap_change_percentage_24h;
 
         return (
-            <tr key={index}>
-                <td className="flex gap-4">
+            <tr key={index} className="border-b-[1px] border-neutral-600 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
+                <td className="flex gap-4 justify-start p-6">
                     <div className="w-[50px] h-[50px]">
                         <img src={coin.image} alt={coin.name}/>
                     </div>
@@ -20,20 +20,20 @@ const ResultTable = () => {
                         <p className="opacity-60">{coin.name}</p>
                     </div>
                 </td>
-                <td>
+                <td className="p-6 text-right">
                     <div>
                         <span>{formatMoney(coin.current_price)}</span>
                     </div>
                 </td>
-                <td>
+                <td className="p-6 text-right">
                     <div className={`${trend24h > 0 ? "text-green-600" : "text-red-600" }`}>
                         {trend24h > 0 && "+"}
                         {coin.market_cap_change_percentage_24h.toFixed(2)}
                         {"%"}
                     </div>
                 </td>
-                <td>
-                    <div className="text-end">
+                <td className="p-6">
+                    <div className="text-right">
                         {formatMoney(parseInt(Math.round(coin.market_cap / 1000000).toFixed(2))).replace(".00","M")}
                     </div>
                 </td>
@@ -42,14 +42,14 @@ const ResultTable = () => {
     })
 
     return (
-        <div>
-            <table>
-                <thead>
-                    <tr className="text-left">
-                        <th>Coin</th>
-                        <th>Price</th>
-                        <th>24h Change</th>
-                        <th>Market Cap</th>
+        <div className="overflow-x-auto rounded-t-lg">
+            <table className="w-full">
+                <thead className="bg-violet-600">
+                    <tr>
+                        <th className="text-left p-6 w-1/4">Coin</th>
+                        <th className="text-right p-6 w-1/4">Price</th>
+                        <th className="text-right p-6 w-1/4">24h Change</th>
+                        <th className="text-right p-6 w-1/4">Market Cap</th>
                     </tr>
                 </thead>
                 <tbody>

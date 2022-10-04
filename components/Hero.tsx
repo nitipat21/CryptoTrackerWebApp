@@ -11,9 +11,15 @@ const Hero = () => {
                 <div>
                     <HeroCarousel/>
                 </div>
-                <div>
-                    <Link href={('/tracker')}><h1>Tracker</h1></Link>
+                <div className="flex justify-center gap-8">
+                    <div className="border p-4 ">
+                        <Link href={('/tracker')}><h1 className="text-center">Track Now</h1></Link>
+                    </div>
+                    <div className="border p-4 ">
+                        <Link href={('/tracker')}><h1 className="text-center">Join Our Blog</h1></Link>
+                    </div>
                 </div>
+                
             </div>
         </div>
     );
