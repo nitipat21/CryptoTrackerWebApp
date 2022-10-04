@@ -1,8 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { TrendingCoins } from "../cryptoAPI/api";
 import { selectCurrencyState } from "../store/cryptoSlice";
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { TrendingCoins } from "../cryptoAPI/api";
+import formatMoney from "../utils/fomatCurrency";
 
 const HeroCarousel = () => {
 
@@ -41,27 +42,24 @@ const HeroCarousel = () => {
                     </span>
                 </div>
                 <div className="text-lg">
-                    <span className="mr-1">{currency === "USD" ? "$" : "AU$"}</span>
-                    <span >{coin.current_price.toFixed(2)}</span>
+                    <span >{formatMoney(coin.current_price, currency)}</span>
                 </div>
             </div>
         );
     })
 
-    useEffect(() => {
-        (async () => {
+    useEffect(()=>{
+        (async function fetchData () {
             const { data } = await axios.get(TrendingCoins(currency));
             setTrending(data);
         })();
-
-      }, []);
+    },[currency])
 
     return (
         <div className="overflow-hidden">
             <div className="
             relative 
-            overflow-x-auto
-            overscroll-contain 
+            overflow-x-auto 
             flex 
             items-baseline 
             snap-mandatory 
