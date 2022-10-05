@@ -3,10 +3,10 @@ import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
     return (
-        <footer className='bg-neutral-900 grid justify-center p-8 gap-8 mt-8'>
+        <footer className='bg-neutral-900 grid justify-center p-8 gap-8'>
             <div className='flex gap-4 justify-center'>
-                <FontAwesomeIcon icon={faLinkedin} size={"2xl"} className="cursor-pointer hover:scale-110 hover:opacity-60"/>
-                <FontAwesomeIcon icon={faGithub} size={"2xl"} className="cursor-pointer hover:scale-110 hover:opacity-60"/>
+                <FontAwesomeIcon icon={faLinkedin} size={"2xl"} className="cursor-pointer hover:scale-110 hover:opacity-60 hover:transition-all"/>
+                <FontAwesomeIcon icon={faGithub} size={"2xl"} className="cursor-pointer hover:scale-110 hover:opacity-60 hover:transition-all"/>
             </div>
             <div>
                 <h1>Created by Nitipat Ruengsatawit</h1>

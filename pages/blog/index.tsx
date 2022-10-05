@@ -1,14 +1,15 @@
 import Layout from "../../components/Layout";
-import SignUpForm from "../../components/signupForm";
+import { app } from "../../config/firebase";
 
-const newAccount = () => {
+const Blog = () => {
+    console.log(app)
     return (
         <Layout title="Home">
             <div className="bg-neutral-800">
-                <SignUpForm/>
+                
             </div>
         </Layout>
     );
 }
 
-export default newAccount;
+export default Blog;

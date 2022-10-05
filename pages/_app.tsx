@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   <Provider store={store}>
     <Component {...props} />
   </Provider> 
-  : null;
+  : <div>Loading...</div>;
 }
 
 export default MyApp;

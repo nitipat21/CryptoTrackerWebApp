@@ -55,7 +55,7 @@ const ResultTable = () => {
             <tr key={index} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
                 <td className="flex gap-4 justify-start p-6 items-center">
                     <div className="w-[50px] h-[50px] shrink-0">
-                        <img src={coin.image} alt={coin.name}/>
+                        <img src={coin.image} alt={coin.name} />
                     </div>
                     <div>
                         <h1>{coin.symbol.toUpperCase()}</h1>
@@ -94,6 +94,10 @@ const ResultTable = () => {
     useEffect(()=>{
         setPage(1);
     },[search])
+
+    useEffect(()=> {
+        setPage(1);
+    },[sort])
 
     return (
         <div className="overflow-x-auto rounded-t-lg w-full">

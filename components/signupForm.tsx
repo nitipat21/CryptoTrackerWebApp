@@ -1,8 +1,14 @@
-import { faCheck, faCircleXmark, faEye, faEyeSlash, faUpRightFromSquare, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FC, useEffect, useRef, useState } from "react";
+import { auth, db } from "../config/firebase";
+import { addDoc, collection } from '@firebase/firestore';
+import { useRouter } from "next/router";
 
 const SignUpForm:FC = () => {
+
+    const router = useRouter();
 
     const firstNameRef = useRef<HTMLInputElement | null>(null);
 
@@ -26,8 +32,6 @@ const SignUpForm:FC = () => {
 
     const [isStrongPassword, setIsStrongPassword] = useState<boolean>(false);
 
-    const [isAgree, setIsAgree] = useState(false);
-
     const [focus, setFocus] = useState<string>("");
 
     const onClickFirstName = () => {
@@ -50,7 +54,7 @@ const SignUpForm:FC = () => {
         event.preventDefault();
 
         // check input
-        if (!firstName || !lastName || !username || !isStrongPassword || !isAgree) {
+        if (!firstName || !lastName || !username || !isStrongPassword) {
             setIsWarning(true);
             if (!firstName) {
                 firstNameRef.current?.focus();
@@ -62,12 +66,30 @@ const SignUpForm:FC = () => {
                 passwordRef.current?.focus();
             }
         } else {
-            // signUp
+            // signup
+            (async () => {
+                try {
+                    const res = await createUserWithEmailAndPassword(auth, username, password);
+
+                    const user = res.user;
+
+                    await addDoc(collection(db, "users"), {
+                        uid: user.uid,
+                        firstName: firstName,
+                        lastName: lastName,
+                        wishlist: []
+                    });
+
+                    router.push('/')
+
+                } catch (error) {
+                    alert(error);
+                }
+            })();
         }
     }
 
     useEffect(()=>{
-        if (isWarning) {
             const citeria1 = password.length > 8;
             const citeria2 = /\d/.test(password);
             const citeria3 = /[A-Z]/.test(password);
@@ -79,16 +101,17 @@ const SignUpForm:FC = () => {
             } else {
                 setIsStrongPassword(false);
             }
-        }
-    },[password, isWarning]);
+
+            console.log(isStrongPassword)
+    },[password]);
 
     return (
         <div className="">
             <div className="py-16">
                 <form className="grid gap-6 max-w-[500px] px-8 py-8 m-auto">
                     <p><span>*</span> indicates required field</p>
-                    <div className="section-header">
-                        <h3>Personal Information</h3>
+                    <div>
+                        <h3 className="font-bold -mb-4">Personal Information</h3>
                     </div>
                     <div className="firstName">
                         <div className="relative cursor-text" onClick={onClickFirstName}>
@@ -151,8 +174,8 @@ const SignUpForm:FC = () => {
                             </div>
                         }
                     </div>
-                    <div className="section-header">
-                        <h3>Account Security</h3>
+                    <div>
+                        <h3 className="font-bold -mb-4">Account Security</h3>
                     </div>
                     <div className="username">
                         <div className="relative cursor-text" onClick={onClickUsername}>
@@ -184,7 +207,7 @@ const SignUpForm:FC = () => {
                                 <p>Enter an email/username.</p>
                             </div>
                         }
-                        <p style={{fontSize:'90%'}}>This will be your username</p>
+                        <p className="text-sm mt-2 pb-2 ml-2">This will be your username</p>
                     </div>
                     <div className="password">
                         <div className="relative cursor-text" onClick={onClickPassword}>
@@ -259,7 +282,7 @@ const SignUpForm:FC = () => {
                                 </div>
                             </>
                         }
-                        <p style={{fontSize:'90%'}}>Create a password 8 to 25 characters long that includes at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character like an exclamation point or asterisk.</p>
+                        <p className="text-sm mt-2 pb-2 ml-2">Create a password 8 to 25 characters long that includes at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character like an exclamation point or asterisk.</p>
                     </div>
                     <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onSubmit}>
                         <span>Create Account</span>

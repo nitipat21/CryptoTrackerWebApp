@@ -4,12 +4,25 @@ import Sidebar from "./Sidebar";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { cryptoSlice, selectUserState } from '../store/cryptoSlice';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const Navbar = () => {
     
     const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
 
     const rounter = useRouter();
+
+    const user = useSelector(selectUserState);
+
+    const dispatch = useDispatch();
+
+    const logout = async () => {
+        dispatch(cryptoSlice.actions.setUser(null));
+        await signOut(auth)
+    }
 
     return (
         <nav className="sticky bg-neutral-900">
@@ -28,16 +41,36 @@ const Navbar = () => {
                                 <button>Tracker</button>
                             </Link>
                         </div>
-                        <div className={`${rounter.pathname === "/login" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
-                            <Link href={('/login')}>
-                                <button>Log in</button>
+                        <div className={`${rounter.pathname === "/blog" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
+                            <Link href={('/tracker')}>
+                                <button>Blog</button>
                             </Link>
                         </div>
-                        <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
-                            <Link href={('/newAccount')}>
-                                <button>Create You Account</button>
-                            </Link>
-                        </div>
+                        { user ?
+                        <>
+                            <div className={`${rounter.pathname === "/login" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
+                                <Link href={('/profile')}>
+                                    <button>Profile</button>
+                                </Link>
+                            </div>
+                            <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
+                                <button onClick={logout}>Logout</button>
+                            </div>
+                        </>
+                            :
+                        <>
+                            <div className={`${rounter.pathname === "/login" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
+                                <Link href={('/login')}>
+                                    <button>Log in</button>
+                                </Link>
+                            </div>
+                            <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
+                                <Link href={('/newAccount')}>
+                                    <button>Create You Account</button>
+                                </Link>
+                            </div>
+                        </>
+                        }
                     </div>
                     <div className="md:hidden">
                         <button>

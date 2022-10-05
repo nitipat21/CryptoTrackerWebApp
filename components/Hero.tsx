@@ -12,11 +12,11 @@ const Hero = () => {
                     <HeroCarousel/>
                 </div>
                 <div className="flex justify-center gap-8">
-                    <div className="border p-4 ">
+                    <div className="border p-4 cursor-pointer hover:opacity-60 hover:transition-all hover:scale-105">
                         <Link href={('/tracker')}><h1 className="text-center">Track Now</h1></Link>
                     </div>
-                    <div className="border p-4 ">
-                        <Link href={('/tracker')}><h1 className="text-center">Join Our Blog</h1></Link>
+                    <div className="border p-4 cursor-pointer hover:opacity-60 hover:transition-all hover:scale-105">
+                        <Link href={('/blog')}><h1 className="text-center">Join Our Blog</h1></Link>
                     </div>
                 </div>
                 

@@ -1,9 +1,19 @@
 import { faCircleXmark, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { FC, useRef, useState } from "react";
+import {
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+} from 'firebase/auth'
+import { auth } from "../config/firebase";
 
 const LoginForm:FC = () => {
+
+    const router = useRouter()
 
     const usernameRef = useRef<HTMLInputElement | null>(null);
 
@@ -33,9 +43,15 @@ const LoginForm:FC = () => {
         if (!username || !password) {
             setIsWarning(true);
         } else {
-            // login
-        }
-        
+            async () => {
+                try {
+                    signInWithEmailAndPassword(auth, username, password);
+                    router.push('/');
+                } catch (error) {
+                    alert(error);
+                }
+            }     
+        }   
     }
 
     return (

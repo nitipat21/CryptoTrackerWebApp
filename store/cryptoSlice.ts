@@ -4,6 +4,7 @@ import { AppState } from "./store"
 
 // type of state
 export interface cryptoState{
+    user:any;
     coinList:any[];
     trendingList:any[];
     search:string;
@@ -12,6 +13,7 @@ export interface cryptoState{
 
 // initial state
 const initialState: cryptoState = {
+    user: null,
     coinList: [],
     trendingList: [],
     search:"",
@@ -34,6 +36,9 @@ export const cryptoSlice = createSlice({
         },
         setSort: (state, action) => {
           state.sort = action.payload;
+        },
+        setUser: (state, action) => {
+          state.user = action.payload;
         }
     },
     extraReducers: {
@@ -53,5 +58,7 @@ export const selectTrendingListState = (state:AppState) => state.crypto.trending
 export const selectSearchState = (state:AppState) => state.crypto.search;
 
 export const selectSortState = (state:AppState) => state.crypto.sort;
+
+export const selectUserState = (state:AppState) => state.crypto.user;
 
 export default cryptoSlice.reducer;
