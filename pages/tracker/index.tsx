@@ -15,7 +15,7 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
 
     return (
         <Layout title="CryptoTracker">
-            <main className="min-h-screen">
+            <main className="">
                 <Tracker/>
             </main>
         </Layout>

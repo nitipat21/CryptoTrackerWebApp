@@ -3,34 +3,37 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from "./Sidebar";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 
 const Navbar = () => {
     
     const [isShowSidebar, setIsShowSidebar] = useState<boolean>(false);
+
+    const rounter = useRouter();
 
     return (
         <nav className="sticky bg-neutral-900">
             <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 relative">
                 <div className="flex gap-2">
                     <div className="flex gap-8 items-center">
-                        <Link href={('/')} className="font-bold text-lg">
-                            <button>CryptoTracker</button>
+                        <Link href={('/')}>
+                            <button className={`${rounter.pathname === "/" && "text-purple-400"} font-bold text-lg hover:text-purple-400 hover:transition-all`}>CryptoTracker</button>
                         </Link>
                     </div>
                 </div>
                 <div>
                     <div className="hidden items-center justify-center gap-8 md:flex">
-                        <div>
+                        <div className={`${rounter.pathname === "/tracker" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
                             <Link href={('/tracker')}>
                                 <button>Tracker</button>
                             </Link>
                         </div>
-                        <div>
+                        <div className={`${rounter.pathname === "/login" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
                             <Link href={('/login')}>
                                 <button>Log in</button>
                             </Link>
                         </div>
-                        <div className='border-2 border-solid border-purple-400 p-3 rounded-xl'>
+                        <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
                             <Link href={('/newAccount')}>
                                 <button>Create You Account</button>
                             </Link>

@@ -1,33 +1,60 @@
-import { useState } from "react";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectCoinListState } from "../store/cryptoSlice";
+import { selectCoinListState, selectSortState, selectSearchState } from "../store/cryptoSlice";
 import formatMoney from "../utils/fomatCurrency";
 
 const ResultTable = () => {
     
     const coinsList = useSelector(selectCoinListState);
 
+    const search = useSelector(selectSearchState);
+
+    const sort = useSelector(selectSortState);
+
     const [page, setPage] = useState<number>(1);
 
+    const [pageAmount, setPageAmount] = useState<number>(10);
+ 
     const onRightArrow = () => {
-        if (page < 10) {
+        if (page < pageAmount) {
             setPage(prev => prev + 1)
+            window.scroll(0, 75);
         }
     }
     
     const onLeftArrow = () => {
         if (page > 1) {
             setPage(prev => prev - 1)
+            window.scroll(0, 75);
         }
     }
 
-    const coinsElement = coinsList.slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin:any, index:number) => {
+    const coinsSearched = coinsList.filter((coin:any)=>{
+            return coin.name.toLowerCase().includes(search) ||coin.symbol.toLowerCase().includes(search)
+        })
+        
+
+    const coinSorted = coinsSearched.sort((a:any, b:any) => {
+        if (sort === "market_cap") {
+            return b.market_cap - a.market_cap;
+        } else if (sort === "market_cap_change_percentage_24h") {
+            return b.market_cap_change_percentage_24h - a.market_cap_change_percentage_24h;
+        } else if (sort === "current_price") {
+            return b.current_price - a.current_price;
+        } else {
+            return 0;
+        }
+    })
+
+    const coinsElement = coinSorted.slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin:any, index:number) => {
         const trend24h = coin.market_cap_change_percentage_24h;
 
         return (
             <tr key={index} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
-                <td className="flex gap-4 justify-start p-6">
-                    <div className="w-[50px] h-[50px]">
+                <td className="flex gap-4 justify-start p-6 items-center">
+                    <div className="w-[50px] h-[50px] shrink-0">
                         <img src={coin.image} alt={coin.name}/>
                     </div>
                     <div>
@@ -56,25 +83,39 @@ const ResultTable = () => {
         );
     })
 
+    useEffect(() => {
+        if (Math.round(coinsSearched.length / 10) > 1) {
+            setPageAmount(Math.round(coinsSearched.length / 10));
+        } else {
+            setPageAmount(1);
+        }
+    }, [coinsSearched.length])
+    
+    useEffect(()=>{
+        setPage(1);
+    },[search])
+
     return (
-        <div className="overflow-x-auto rounded-t-lg">
+        <div className="overflow-x-auto rounded-t-lg w-full">
             <table className="w-full">
                 <thead className="bg-violet-600">
                     <tr>
-                        <th className="text-left p-6 w-1/4">Coin</th>
-                        <th className="text-right p-6 w-1/4">Price</th>
-                        <th className="text-right p-6 w-1/4">24h Change</th>
-                        <th className="text-right p-6 w-1/4">Market Cap</th>
+                        <th className="text-left p-6">Coin</th>
+                        <th className="text-right p-6">Price</th>
+                        <th className="text-right p-6">24h Change</th>
+                        <th className="text-right p-6">Market Cap</th>
                     </tr>
                 </thead>
                 <tbody>
                     {coinsElement}
                 </tbody>
             </table>
-            <div className="flex justify-center gap-4 absolute left-1/2 -translate-x-1/2 text-xl">
-                <div onClick={onLeftArrow}>{"<"}</div>
-                <div>{page} - 10</div>
-                <div onClick={onRightArrow}>{">"}</div>
+            <div>
+                <div className="flex items-center justify-center gap-4 absolute left-1/2 -translate-x-1/2 text-xl p-4">
+                    <div onClick={onLeftArrow} className={`cursor-pointer ${page === 1 && "opacity-30 cursor-default"}`}>{<FontAwesomeIcon icon={faChevronLeft}/>}</div>
+                    <div>{page} - {pageAmount}</div>
+                    <div onClick={onRightArrow} className={`cursor-pointer ${page === pageAmount && "opacity-30 cursor-default"}`}>{<FontAwesomeIcon icon={faChevronRight}/>}</div>
+                </div>
             </div>
         </div>
     );
