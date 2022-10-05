@@ -3,12 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useRef, useState } from "react";
-import {
-    onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-} from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from "../config/firebase";
 
 const LoginForm:FC = () => {
@@ -43,14 +38,14 @@ const LoginForm:FC = () => {
         if (!username || !password) {
             setIsWarning(true);
         } else {
-            async () => {
+            (async () => {
                 try {
                     signInWithEmailAndPassword(auth, username, password);
                     router.push('/');
                 } catch (error) {
                     alert(error);
                 }
-            }     
+            })();
         }   
     }
 
