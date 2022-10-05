@@ -16,14 +16,6 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
 
     const dispatch = useDispatch();
 
-    const user = useSelector(selectUserState);
-
-    console.log(user)
-
-    console.log(auth.currentUser)
-
-    console.log(usersCollectionRef)
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           if (user) {

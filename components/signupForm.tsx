@@ -5,6 +5,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { auth, db } from "../config/firebase";
 import { addDoc, collection } from '@firebase/firestore';
 import { useRouter } from "next/router";
+import { updateProfile } from "firebase/auth";
 
 const SignUpForm:FC = () => {
 
@@ -72,13 +73,27 @@ const SignUpForm:FC = () => {
                     const res = await createUserWithEmailAndPassword(auth, username, password);
 
                     const user = res.user;
-
+                    
+                    // add user data to collection users
                     await addDoc(collection(db, "users"), {
                         uid: user.uid,
                         firstName: firstName,
                         lastName: lastName,
-                        wishlist: []
-                    });
+                        tracklist: []
+                    }).then(()=>{
+                        console.log("Create user data");
+                    }).catch((error)=>{
+                        alert(error);
+                    })
+
+                    // update display name
+                    await updateProfile(auth.currentUser!, {
+                        displayName: `${firstName} ${lastName}`, photoURL: ""
+                    }).then(()=>{
+                        console.log("update displayName");
+                    }).catch((error)=>{
+                        alert(error);
+                    })
 
                     router.push('/')
 
@@ -101,8 +116,6 @@ const SignUpForm:FC = () => {
             } else {
                 setIsStrongPassword(false);
             }
-
-            console.log(isStrongPassword)
     },[password]);
 
     return (

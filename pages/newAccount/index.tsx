@@ -1,9 +1,9 @@
 import Layout from "../../components/Layout";
-import SignUpForm from "../../components/signupForm";
+import SignUpForm from "../../components/SignupForm";
 
-const newAccount = () => {
+const NewAccount = () => {
     return (
-        <Layout title="Home">
+        <Layout title="New Account">
             <div className="bg-neutral-800">
                 <SignUpForm/>
             </div>
@@ -11,4 +11,4 @@ const newAccount = () => {
     );
 }
 
-export default newAccount;
+export default NewAccount;

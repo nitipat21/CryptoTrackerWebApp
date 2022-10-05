@@ -21,7 +21,9 @@ const Navbar = () => {
 
     const logout = async () => {
         dispatch(cryptoSlice.actions.setUser(null));
+        dispatch(cryptoSlice.actions.setTrackList([]));
         await signOut(auth)
+        rounter.push("/");
     }
 
     return (

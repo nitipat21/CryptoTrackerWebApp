@@ -1,8 +1,9 @@
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectCoinListState, selectSortState, selectSearchState } from "../store/cryptoSlice";
+import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState } from "../store/cryptoSlice";
 import formatMoney from "../utils/fomatCurrency";
 
 const ResultTable = () => {
@@ -12,6 +13,8 @@ const ResultTable = () => {
     const search = useSelector(selectSearchState);
 
     const sort = useSelector(selectSortState);
+
+    const userTrackList = useSelector(selectUserTrackListState);
 
     const [page, setPage] = useState<number>(1);
 
@@ -76,7 +79,12 @@ const ResultTable = () => {
                 </td>
                 <td className="p-6">
                     <div className="text-right">
-                        {formatMoney(parseInt(Math.round(coin.market_cap / 1000000).toFixed(2))).replace(".00","M")}
+                        {formatMoney(parseInt(Math.round(coin.market_cap / 1000000).toFixed(2))).replace(".00","M")}                   
+                    </div>
+                </td>
+                <td className="p-6 z-50">
+                    <div>
+                        <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400"/>
                     </div>
                 </td>
             </tr>
@@ -108,6 +116,7 @@ const ResultTable = () => {
                         <th className="text-right p-6">Price</th>
                         <th className="text-right p-6">24h Change</th>
                         <th className="text-right p-6">Market Cap</th>
+                        <th className="text-right p-6"></th>
                     </tr>
                 </thead>
                 <tbody>

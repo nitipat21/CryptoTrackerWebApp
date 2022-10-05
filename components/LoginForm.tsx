@@ -4,11 +4,16 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useRef, useState } from "react";
 import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from "../config/firebase";
+import { auth, usersCollectionRef } from "../config/firebase";
+import { getDocs } from '@firebase/firestore';
+import { useDispatch } from "react-redux";
+import { cryptoSlice } from "../store/cryptoSlice";
 
 const LoginForm:FC = () => {
 
-    const router = useRouter()
+    const router = useRouter();
+
+    const dispatch = useDispatch();
 
     const usernameRef = useRef<HTMLInputElement | null>(null);
 
@@ -40,13 +45,40 @@ const LoginForm:FC = () => {
         } else {
             (async () => {
                 try {
-                    signInWithEmailAndPassword(auth, username, password);
+                    // sign in
+                    await signInWithEmailAndPassword(auth, username, password)
+
+                    // redirect to home page
                     router.push('/');
+
+                    // get trackList from database
+                    const data = await getDocs(usersCollectionRef)
+                               
+                    data.docs.forEach((user) => {
+                        if (user.data().uid === auth.currentUser?.uid) {
+                            dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
+                        }
+                    });
+
                 } catch (error) {
                     alert(error);
                 }
             })();
         }   
+    }
+
+    const onDemoLogin = async () => {
+        await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
+        router.push('/');
+
+        // get trackList from database
+        const data = await getDocs(usersCollectionRef)
+                               
+        data.docs.forEach((user) => {
+            if (user.data().uid === auth.currentUser?.uid) {
+                dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
+            }
+        });
     }
 
     return (
@@ -126,6 +158,9 @@ const LoginForm:FC = () => {
                     </div>
                     <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onSubmit}>
                         <span>Log in</span>
+                    </div>
+                    <div className="cursor-pointer font-bold border-purple-400 text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onDemoLogin}>
+                        <span>Demo Log in</span>
                     </div>
                 </form>
                 <div className="text-center">
