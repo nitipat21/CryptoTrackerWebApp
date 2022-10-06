@@ -37,7 +37,7 @@ const HeroCarousel = () => {
             setShowItems(3);
         }
         setSlide(0);
-    }, [width?.width!])
+    },[width?.width])
 
     const itemElements = trendingList.map((coin:any, index:number) => {
         const trend24h = coin.market_cap_change_percentage_24h;
