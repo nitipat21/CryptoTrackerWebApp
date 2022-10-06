@@ -1,5 +1,5 @@
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faChartLine, faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -64,7 +64,7 @@ const ResultTable = () => {
     const coinsElement = coinOnTrackList.slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin:any) => {
         const trend24h = coin.market_cap_change_percentage_24h;
         return (
-            <tr key={coin.id} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
+            <tr key={coin.id} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors">
                 <td className="flex gap-4 justify-start p-6 items-center">
                     <div className="w-[50px] h-[50px] shrink-0">
                         <img src={coin.image} alt={coin.name} />
@@ -92,12 +92,18 @@ const ResultTable = () => {
                     </div>
                 </td>
                 <td className="p-6 z-50">
-                    <div>{userTrackList && userTrackList.includes(coin.id) ?
-                        <div onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
-                            <FontAwesomeIcon icon={faSolidHeart} className="text-2xl text-purple-400" />
+                    <div className="flex gap-4">
+                        <div className="cursor-pointer">
+                            <FontAwesomeIcon icon={faChartLine} className={`text-2xl transition-all ${trend24h > 0 ? "text-green-400" : "text-red-400" }`}/>
+                        </div>
+                        {userTrackList && userTrackList.includes(coin.id) ?
+                        <div className="cursor-pointer" onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
+                            <FontAwesomeIcon icon={faSolidHeart} className="text-2xl text-purple-400"/>
                         </div>
                         :
-                        <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}/>
+                        <div className="cursor-pointer" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}>
+                            <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400"/>
+                        </div>
                         }
                     </div>
                 </td>
