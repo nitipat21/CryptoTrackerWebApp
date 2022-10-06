@@ -37,7 +37,7 @@ const LoginForm:FC = () => {
         passwordRef.current?.focus();
     }
 
-    const onSubmit = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
+    const onLogin = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
 
         if (!username || !password) {
@@ -48,17 +48,24 @@ const LoginForm:FC = () => {
                     // sign in
                     await signInWithEmailAndPassword(auth, username, password)
 
-                    // redirect to home page
-                    router.push('/');
-
                     // get trackList from database
                     const data = await getDocs(usersCollectionRef)
                                
                     data.docs.forEach((user) => {
                         if (user.data().uid === auth.currentUser?.uid) {
                             dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
+                            dispatch(cryptoSlice.actions.setUserDocId(user.id));
+                            if (user.data().trackList) {
+                                localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
+                            } else {
+                                localStorage.setItem("trackList", JSON.stringify([]));
+                            }
+                            localStorage.setItem("userDocId", JSON.stringify(user.id));
                         }
                     });
+
+                    // redirect to home page
+                    router.push('/');
 
                 } catch (error) {
                     alert(error);
@@ -69,7 +76,6 @@ const LoginForm:FC = () => {
 
     const onDemoLogin = async () => {
         await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
-        router.push('/');
 
         // get trackList from database
         const data = await getDocs(usersCollectionRef)
@@ -77,8 +83,17 @@ const LoginForm:FC = () => {
         data.docs.forEach((user) => {
             if (user.data().uid === auth.currentUser?.uid) {
                 dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
+                dispatch(cryptoSlice.actions.setUserDocId(user.id));
+                if (user.data().trackList) {
+                    localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
+                } else {
+                    localStorage.setItem("trackList", JSON.stringify([]));
+                }
+                localStorage.setItem("userDocId", JSON.stringify(user.id));
             }
         });
+
+        router.push('/');
     }
 
     return (
@@ -156,7 +171,7 @@ const LoginForm:FC = () => {
                     <div className="underline hover:text-purple-400 hover:transition-all">
                         <a href="">Forgot your password?</a>
                     </div>
-                    <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onSubmit}>
+                    <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onLogin}>
                         <span>Log in</span>
                     </div>
                     <div className="cursor-pointer font-bold border-purple-400 text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onDemoLogin}>

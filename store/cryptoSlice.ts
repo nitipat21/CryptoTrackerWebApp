@@ -5,6 +5,7 @@ import { AppState } from "./store"
 // type of state
 export interface cryptoState{
     user:any;
+    userDocId: any
     userTrackList:any[];
     coinList:any[];
     trendingList:any[];
@@ -15,6 +16,7 @@ export interface cryptoState{
 // initial state
 const initialState: cryptoState = {
     user: null,
+    userDocId: null,
     userTrackList: [],
     coinList: [],
     trendingList: [],
@@ -44,7 +46,19 @@ export const cryptoSlice = createSlice({
         },
         setTrackList: (state, action) => {
           state.userTrackList = action.payload;
-        }
+        },
+        setUserDocId: (state, action) => {
+          state.userDocId = action.payload;
+        },
+        addCoinToTrackList: (state, action) => {
+          state.userTrackList.push(action.payload);
+        },
+        deleteCoinFromTrackList: (state, action) => {
+          const index = state.userTrackList.indexOf(action.payload);
+          if (index > -1) {
+            state.userTrackList.splice(index, 1);
+          }
+        },
     },
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -67,5 +81,7 @@ export const selectSortState = (state:AppState) => state.crypto.sort;
 export const selectUserState = (state:AppState) => state.crypto.user;
 
 export const selectUserTrackListState = (state:AppState) => state.crypto.userTrackList;
+
+export const selectUserDocId = (state:AppState) => state.crypto.userDocId;
 
 export default cryptoSlice.reducer;

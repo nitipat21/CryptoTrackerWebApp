@@ -31,6 +31,7 @@ const Tracker = () => {
                                     <option value="market_cap">Market Cap</option>
                                     <option value="market_cap_change_percentage_24h">24h Change</option>
                                     <option value="current_price">Price</option>
+                                    <option value="mytracklist">My Tracklist</option>
                                 </select>
                             </div>
                         </span>

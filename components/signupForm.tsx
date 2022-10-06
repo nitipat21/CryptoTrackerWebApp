@@ -2,14 +2,19 @@ import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from "@fortawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FC, useEffect, useRef, useState } from "react";
-import { auth, db } from "../config/firebase";
+import { auth, db, usersCollectionRef } from "../config/firebase";
 import { addDoc, collection } from '@firebase/firestore';
 import { useRouter } from "next/router";
 import { updateProfile } from "firebase/auth";
+import { getDocs } from '@firebase/firestore';
+import { useDispatch } from "react-redux";
+import { cryptoSlice } from "../store/cryptoSlice";
 
 const SignUpForm:FC = () => {
 
     const router = useRouter();
+
+    const dispatch = useDispatch();
 
     const firstNameRef = useRef<HTMLInputElement | null>(null);
 
@@ -94,6 +99,17 @@ const SignUpForm:FC = () => {
                     }).catch((error)=>{
                         alert(error);
                     })
+                    
+                    const data = await getDocs(usersCollectionRef)
+                               
+                    data.docs.forEach((user) => {
+                        if (user.data().uid === auth.currentUser?.uid) {
+                            dispatch(cryptoSlice.actions.setTrackList([]));
+                            dispatch(cryptoSlice.actions.setUserDocId(user.id));
+                            localStorage.setItem("userDocId", JSON.stringify([]));
+                            localStorage.setItem("userDocId", JSON.stringify(user.id));
+                        }
+                    });
 
                     router.push('/')
 
@@ -198,7 +214,7 @@ const SignUpForm:FC = () => {
                                 ${focus !== 'username' && "text-neutral-300"}
                                 ${(isWarning && !username) && "text-red-400"}
                                 `
-                            }>* Username or email address</div>
+                            }>* Email address</div>
                             <input
                                 type="text" 
                                 name="username" 

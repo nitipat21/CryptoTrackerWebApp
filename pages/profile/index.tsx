@@ -1,10 +1,19 @@
 import { useSelector } from "react-redux";
 import Layout from "../../components/Layout";
-import { selectUserState } from "../../store/cryptoSlice";
+import { selectUserState, selectUserTrackListState } from "../../store/cryptoSlice";
 
 const Profile = () => {
 
     const user = useSelector(selectUserState);
+
+    const userTrackList = useSelector(selectUserTrackListState);
+
+    const tracklistElement = userTrackList.map((coin,index) => {
+            return  <div key={coin+index}>
+                    <span>{index + 1}. </span>
+                    <span>{coin}</span>
+                </div>
+    })
 
     return (
         <Layout title="Profile">
@@ -20,7 +29,7 @@ const Profile = () => {
                         <span>Email:</span> <span>{user && user.email}</span>
                     </div>
                     <div>
-                        <span>Wishlist:</span> <span>-</span>
+                        <span>My Tracklist:</span> <span>{tracklistElement}</span>
                     </div>
                 </div>
             </div>

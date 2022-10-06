@@ -1,9 +1,10 @@
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState } from "../store/cryptoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState, cryptoSlice } from "../store/cryptoSlice";
 import formatMoney from "../utils/fomatCurrency";
 
 const ResultTable = () => {
@@ -16,10 +17,12 @@ const ResultTable = () => {
 
     const userTrackList = useSelector(selectUserTrackListState);
 
+    const dispatch = useDispatch();
+
     const [page, setPage] = useState<number>(1);
 
     const [pageAmount, setPageAmount] = useState<number>(10);
- 
+
     const onRightArrow = () => {
         if (page < pageAmount) {
             setPage(prev => prev + 1)
@@ -35,10 +38,9 @@ const ResultTable = () => {
     }
 
     const coinsSearched = coinsList.filter((coin:any)=>{
-            return coin.name.toLowerCase().includes(search) ||coin.symbol.toLowerCase().includes(search)
-        })
+        return coin.name.toLowerCase().includes(search) || coin.symbol.toLowerCase().includes(search)
+    })
         
-
     const coinSorted = coinsSearched.sort((a:any, b:any) => {
         if (sort === "market_cap") {
             return b.market_cap - a.market_cap;
@@ -51,11 +53,18 @@ const ResultTable = () => {
         }
     })
 
-    const coinsElement = coinSorted.slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin:any, index:number) => {
-        const trend24h = coin.market_cap_change_percentage_24h;
+    const coinOnTrackList = coinSorted.filter((coin:any) => {
+        if (sort === "mytracklist") {
+            return userTrackList.includes(coin.id)
+        } else {
+            return coin;
+        }
+    })
 
+    const coinsElement = coinOnTrackList.slice((page - 1) * 10, (page - 1) * 10 + 10).map((coin:any) => {
+        const trend24h = coin.market_cap_change_percentage_24h;
         return (
-            <tr key={index} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
+            <tr key={coin.id} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
                 <td className="flex gap-4 justify-start p-6 items-center">
                     <div className="w-[50px] h-[50px] shrink-0">
                         <img src={coin.image} alt={coin.name} />
@@ -83,8 +92,13 @@ const ResultTable = () => {
                     </div>
                 </td>
                 <td className="p-6 z-50">
-                    <div>
-                        <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400"/>
+                    <div>{userTrackList && userTrackList.includes(coin.id) ?
+                        <div onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
+                            <FontAwesomeIcon icon={faSolidHeart} className="text-2xl text-purple-400" />
+                        </div>
+                        :
+                        <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}/>
+                        }
                     </div>
                 </td>
             </tr>
@@ -92,12 +106,12 @@ const ResultTable = () => {
     })
 
     useEffect(() => {
-        if (Math.round(coinsSearched.length / 10) > 1) {
-            setPageAmount(Math.round(coinsSearched.length / 10));
+        if (Math.round(coinOnTrackList.length / 10) > 1) {
+            setPageAmount(Math.round(coinOnTrackList.length / 10));
         } else {
             setPageAmount(1);
         }
-    }, [coinsSearched.length])
+    }, [coinOnTrackList.length])
     
     useEffect(()=>{
         setPage(1);

@@ -15,7 +15,9 @@ const Sidebar = () => {
 
     const logout = async () => {
         dispatch(cryptoSlice.actions.setUser(null));
+        dispatch(cryptoSlice.actions.setUserDocId(null));
         dispatch(cryptoSlice.actions.setTrackList([]));
+        localStorage.clear();
         await signOut(auth);
         rounter.push("/");
     }
