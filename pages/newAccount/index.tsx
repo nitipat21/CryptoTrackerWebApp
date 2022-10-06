@@ -1,5 +1,6 @@
 import Layout from "../../components/Layout";
-import SignUpForm from "../../components/SignupForm";
+import SignUpForm from "../../components/SignUpForm";
+
 
 
 const NewAccount = () => {
