@@ -10,7 +10,7 @@ import { getDocs } from '@firebase/firestore';
 import { useDispatch } from "react-redux";
 import { cryptoSlice } from "../store/cryptoSlice";
 
-const SignUpForm:FC = () => {
+const Signup:FC = () => {
 
     const router = useRouter();
 
@@ -322,4 +322,4 @@ const SignUpForm:FC = () => {
     );
 }
 
-export default SignUpForm;
+export default Signup;

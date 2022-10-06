@@ -1,13 +1,11 @@
 import Layout from "../../components/Layout";
-import SignUpForm from "../../components/SignUpForm";
-
-
+import Signup from "../../components/SignUp";
 
 const NewAccount = () => {
     return (
         <Layout title="New Account">
             <div className="bg-neutral-800">
-                <SignUpForm/>
+               <Signup/>
             </div>
         </Layout>
     );
