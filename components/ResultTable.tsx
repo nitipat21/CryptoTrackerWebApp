@@ -2,6 +2,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faChartLine, faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState, cryptoSlice } from "../store/cryptoSlice";
@@ -93,15 +94,19 @@ const ResultTable = () => {
                 </td>
                 <td className="p-6 z-50">
                     <div className="flex gap-4">
-                        <div className="cursor-pointer">
-                            <FontAwesomeIcon icon={faChartLine} className={`text-2xl transition-all ${trend24h > 0 ? "text-green-400" : "text-red-400" }`}/>
+                        <div className="cursor-pointer hover:scale-110 hover:transition-all">
+                            <Link href={(`/tracker/${coin.id}?days=1`)} passHref>
+                                <a href="" target={"_blank"}>
+                                    <FontAwesomeIcon icon={faChartLine} className={`text-2xl transition-all ${trend24h > 0 ? "text-green-400" : "text-red-400" }`}/>
+                                </a>
+                            </Link>
                         </div>
                         {userTrackList && userTrackList.includes(coin.id) ?
-                        <div className="cursor-pointer" onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
+                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
                             <FontAwesomeIcon icon={faSolidHeart} className="text-2xl text-purple-400"/>
                         </div>
                         :
-                        <div className="cursor-pointer" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}>
+                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}>
                             <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400"/>
                         </div>
                         }

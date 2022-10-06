@@ -42,7 +42,10 @@ const HeroCarousel = () => {
     const itemElements = trendingList.map((coin:any, index:number) => {
         const trend24h = coin.market_cap_change_percentage_24h;
         return (
-            <div key={index} className={`
+            <div 
+            key={index}
+            style={{transform: `translate(-${slide}00%, 0px)`, transition:"all 0.3s"}} 
+            className={`
             flex 
             flex-col 
             flex-shrink-0 
@@ -54,7 +57,7 @@ const HeroCarousel = () => {
             lg:w-1/5
             h-full
             py-8
-            bg-neutral-900 -translate-x-[${slide}00%] transition-all`}
+            bg-neutral-900`}
             >
                 <div className="font-bold opacity-60 text-lg">{index + 1}</div>
                 <div className="p-4">
