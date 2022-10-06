@@ -1,6 +1,7 @@
 import Layout from "../../components/Layout";
 import SignUpForm from "../../components/SignupForm";
 
+
 const NewAccount = () => {
     return (
         <Layout title="New Account">
