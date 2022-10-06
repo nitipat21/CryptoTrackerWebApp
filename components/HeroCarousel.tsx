@@ -4,7 +4,7 @@ import { selectTrendingListState } from "../store/cryptoSlice";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight, faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const HeroCarousel = () => {
 
@@ -93,7 +93,7 @@ const HeroCarousel = () => {
             <div className={`flex absolute top-1/2 left-0 h-[82.5%] bg-neutral-800/30 -translate-y-[50%] px-2 ${slide === 0 && "opacity-20"}`}>
                 <button onClick={onLeftArrow}><FontAwesomeIcon icon={faAngleLeft} className="text-xl"/></button>
             </div>
-            <div className={`flex absolute top-1/2 right-0 h-[90%] bg-neutral-800/30 -translate-y-[50%] px-2 ${slide == 10 - showItems && "opacity-20"}`}>
+            <div className={`flex absolute top-1/2 right-0 h-[82.5%] bg-neutral-800/30 -translate-y-[50%] px-2 ${slide == 10 - showItems && "opacity-20"}`}>
                 <button onClick={onRightArrow}><FontAwesomeIcon icon={faAngleRight} className="text-xl"/></button>
             </div>
         </div>
