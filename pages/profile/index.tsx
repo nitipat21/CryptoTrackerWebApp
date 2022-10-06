@@ -11,7 +11,7 @@ const Profile = () => {
     const tracklistElement = userTrackList.map((coin,index) => {
             return  <div key={coin+index}>
                     <span>{index + 1}. </span>
-                    <span>{coin}</span>
+                    <span>{coin.charAt(0).toUpperCase() + coin.slice(1)}</span>
                 </div>
     })
 
