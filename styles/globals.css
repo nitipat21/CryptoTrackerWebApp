@@ -57,12 +57,6 @@ body{
   }
 
   .btn-spinner{
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height:120px;
-    width:120px;
-    margin:0px auto;
     -webkit-animation: rotation .6s infinite linear;
     -moz-animation: rotation .6s infinite linear;
     -o-animation: rotation .6s infinite linear;

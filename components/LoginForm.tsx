@@ -1,4 +1,4 @@
-import { faCircleXmark, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faEye, faEyeSlash, faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ import { auth, usersCollectionRef } from "../config/firebase";
 import { getDocs } from '@firebase/firestore';
 import { useDispatch } from "react-redux";
 import { cryptoSlice } from "../store/cryptoSlice";
+import { async } from "@firebase/util";
 
 const LoginForm:FC = () => {
 
@@ -41,10 +42,11 @@ const LoginForm:FC = () => {
 
     const onLogin = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
-
+        
         if (!username || !password) {
             setIsWarning(true);
         } else {
+            setIsFetching(true);
             (async () => {
                 try {
                     // sign in
@@ -66,39 +68,53 @@ const LoginForm:FC = () => {
                             localStorage.setItem("userDocId", JSON.stringify(user.id));
                         }
                     });
+                    setIsFetching(false);
 
                     // redirect to home page
                     router.push('/');
 
                 } catch (error) {
+                    setIsFetching(false);
                     alert(error);
                 }
             })();
         }   
     }
 
-    const onDemoLogin = async () => {
-        setIsFetching(true)
-        await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
+    const onDemoLogin = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setUsername("");
+        setPassword("");
+        setIsFetching(true);
 
-        // get trackList from database
-        const data = await getDocs(usersCollectionRef);
-                               
-        data.docs.forEach((user) => {
-            if (user.data().uid === auth.currentUser?.uid) {
-                dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
-                dispatch(cryptoSlice.actions.setUserDocId(user.id));
-
-                if (user.data().trackList) {
-                    localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
-                } else {
-                    localStorage.setItem("trackList", JSON.stringify([]));
-                }
-                localStorage.setItem("userDocId", JSON.stringify(user.id));
+        (async ()=> {
+            try{
+                await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
+        
+                // get trackList from database
+                const data = await getDocs(usersCollectionRef);
+                                       
+                data.docs.forEach((user) => {
+                    if (user.data().uid === auth.currentUser?.uid) {
+                        dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
+                        dispatch(cryptoSlice.actions.setUserDocId(user.id));
+        
+                        if (user.data().trackList) {
+                            localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
+                        } else {
+                            localStorage.setItem("trackList", JSON.stringify([]));
+                        }
+                        localStorage.setItem("userDocId", JSON.stringify(user.id));
+                    }
+                });
+                setIsFetching(false)
+                router.push('/');
             }
-        });
-        setIsFetching(false)
-        router.push('/');
+            catch(error) {
+                setIsFetching(false)
+                alert(error);
+            }
+        })();
     }
 
     return (
@@ -109,7 +125,16 @@ const LoginForm:FC = () => {
                     <div onClick={onClickUsername}>
                         <div className="relative cursor-text">
                             <div className={
-                                `absolute w-fit bg-neutral-800 top-1/2 left-0 translate-x-4 -translate-y-1/2 select-none transition-all p-1 
+                                `absolute 
+                                w-fit 
+                                bg-neutral-800 
+                                top-1/2 
+                                left-0 
+                                translate-x-4 
+                                -translate-y-1/2 
+                                select-none 
+                                transition-all 
+                                p-1 
                                 ${(focus === "username" || username) && "top-0 transition-all text-sm text-purple-400"} 
                                 ${focus !== 'username' && "text-neutral-300"}
                                 ${(isWarning && !username) && "text-red-400"}
@@ -124,7 +149,18 @@ const LoginForm:FC = () => {
                                 onBlur={()=>{setFocus("")}}
                                 value={username}
                                 onChange={(event)=>{setUsername(event.target.value)}}
-                                className={`bg-neutral-800 w-full p-4 rounded-xl border-2 border-solid border-gray-500 outline-none focus:border-purple-400 focus:transition-all ${(isWarning && !username) && "border-2 border-solid border-red-400"}`}
+                                className={`
+                                bg-neutral-800 
+                                w-full 
+                                p-4 
+                                rounded-xl 
+                                border-2 
+                                border-solid 
+                                border-gray-500 
+                                outline-none 
+                                focus:border-purple-400 
+                                focus:transition-all 
+                                ${(isWarning && !username) && "border-2 border-solid border-red-400"}`}
                             />
                             <div className="flex gap-2 absolute top-1/2 right-4 -translate-y-1/2">
                                 {(isWarning && !username) && <FontAwesomeIcon icon={faCircleXmark} className={"text-2xl text-red-400"}/>}
@@ -140,7 +176,14 @@ const LoginForm:FC = () => {
                     <div onClick={onClickPassword}>
                         <div className="relative cursor-text">
                             <div className={
-                                `absolute w-fit bg-neutral-800 top-1/2 left-0 translate-x-4 -translate-y-1/2 select-none transition-all p-1
+                                `absolute w-fit 
+                                bg-neutral-800 
+                                top-1/2 
+                                left-0 
+                                translate-x-4 
+                                -translate-y-1/2 
+                                select-none 
+                                transition-all p-1
                                 ${(focus === "password" || password) && "top-0 transition-all text-sm text-purple-400"} 
                                 ${focus !== "password" && "text-neutral-300"}
                                 ${(isWarning && !password) && "text-red-400"}
@@ -155,7 +198,18 @@ const LoginForm:FC = () => {
                                 onBlur={()=>{setFocus("")}}
                                 value={password}
                                 onChange={(event)=>{setPassword(event.target.value)}}
-                                className={`bg-neutral-800 w-full p-4 rounded-xl border-2 border-solid border-gray-500 outline-none focus:border-purple-400 focus:transition-all ${(isWarning && !password) && "border-2 border-solid border-red-400"}`}
+                                className={`
+                                bg-neutral-800 
+                                w-full 
+                                p-4 
+                                rounded-xl 
+                                border-2 
+                                border-solid 
+                                border-gray-500 
+                                outline-none 
+                                focus:border-purple-400 
+                                focus:transition-all 
+                                ${(isWarning && !password) && "border-2 border-solid border-red-400"}`}
                             />
                             <div className="flex gap-2 absolute top-1/2 right-4 -translate-y-1/2">
                                 { showPassword ? 
@@ -176,16 +230,58 @@ const LoginForm:FC = () => {
                     <div className="underline hover:text-purple-400 hover:transition-all">
                         <a href="">Forgot your password?</a>
                     </div>
-                    <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onLogin}>
-                        <span>Log in</span>
+                    <div className={`
+                        flex 
+                        justify-center 
+                        items-center
+                        h-[60px]
+                        cursor-pointer 
+                        text-center 
+                        py-4 
+                        rounded-xl 
+                        border-2 
+                        border-solid 
+                        hover:border-purple-400 
+                        hover:text-purple-400 
+                        hover:transition-all`}
+                        onClick={onLogin}
+                    >
+                        { isFetching && username && password ?
+                        <FontAwesomeIcon icon={faSpinner} className={"btn-spinner text-transparent"}/>
+                        :
+                        <span>Log in</span>}
                     </div>
-                    <div className="cursor-pointer font-bold border-purple-400 text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onDemoLogin}>
+                    <div className={`
+                        flex 
+                        justify-center 
+                        items-center
+                        h-[60px]
+                        cursor-pointer 
+                        font-bold 
+                        border-purple-400 
+                        text-center 
+                        py-4
+                        rounded-xl 
+                        border-2 
+                        border-solid 
+                        hover:border-purple-400 
+                        hover:text-purple-400 
+                        hover:transition-all `}
+                        onClick={onDemoLogin}
+                    >
+                        { isFetching && !username && !password ?
+                        <FontAwesomeIcon icon={faSpinner} className={"btn-spinner text-transparent"}/>
+                        :
                         <span>Demo Log in</span>
-                        <span className="btn-spinner"></span>
+                        }
                     </div>
                 </form>
                 <div className="text-center">
-                    <p>Not a member? <span className="hover:text-purple-400 hover:transition-all"><Link href={('/newAccount')}>Sign up now</Link></span></p>
+                    <p>Not a member? 
+                        <span className="hover:text-purple-400 hover:transition-all">
+                            <Link href={('/newAccount')}> Sign up now</Link>
+                        </span>
+                    </p>
                 </div>
             </div>
         </div>

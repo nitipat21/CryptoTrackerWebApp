@@ -29,12 +29,15 @@ const HeroCarousel = () => {
     }
 
     useEffect(()=>{
-        if (width?.width! > 767 && width?.width! < 1024) {
+
+        if (width?.width! > 640 && width?.width! < 768) {    
+          setShowItems(3);
+        } else if (width?.width! > 767 && width?.width! < 1024) {
             setShowItems(4);
         } else if (width?.width! > 1024) {
             setShowItems(5);
         } else {
-            setShowItems(3);
+            setShowItems(2);
         }
         setSlide(0);
     },[width?.width])
@@ -52,7 +55,8 @@ const HeroCarousel = () => {
             items-center 
             justify-items-center
             snap-start
-            w-1/3
+            w-1/2 
+            sm:w-1/3
             md:w-1/4
             lg:w-1/5
             h-full

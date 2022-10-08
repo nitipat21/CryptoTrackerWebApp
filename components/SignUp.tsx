@@ -1,4 +1,4 @@
-import { faCheck, faCircleXmark, faEye, faEyeSlash, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCircleXmark, faEye, faEyeSlash, faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FC, useEffect, useRef, useState } from "react";
@@ -40,6 +40,8 @@ const Signup:FC = () => {
 
     const [focus, setFocus] = useState<string>("");
 
+    const [isFetching, setIsFetching] = useState<Boolean>(false);
+
     const onClickFirstName = () => {
         firstNameRef.current?.focus();
     }
@@ -58,7 +60,7 @@ const Signup:FC = () => {
 
     const onSubmit = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
-
+        
         // check input
         if (!firstName || !lastName || !username || !isStrongPassword) {
             setIsWarning(true);
@@ -74,6 +76,7 @@ const Signup:FC = () => {
         } else {
             // signup
             (async () => {
+                setIsFetching(true);
                 try {
                     const res = await createUserWithEmailAndPassword(auth, username, password);
 
@@ -110,16 +113,18 @@ const Signup:FC = () => {
                             localStorage.setItem("userDocId", JSON.stringify(user.id));
                         }
                     });
-
+                    setIsFetching(false);
                     router.push('/')
 
                 } catch (error) {
+                    setIsFetching(false);
                     alert(error);
                 }
             })();
         }
     }
 
+    // check password
     useEffect(()=>{
             const citeria1 = password.length > 8;
             const citeria2 = /\d/.test(password);
@@ -313,8 +318,27 @@ const Signup:FC = () => {
                         }
                         <p className="text-sm mt-2 pb-2 ml-2">Create a password 8 to 25 characters long that includes at least 1 uppercase and 1 lowercase letter, 1 number and 1 special character like an exclamation point or asterisk.</p>
                     </div>
-                    <div className="cursor-pointer text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onSubmit}>
+                    <div className="
+                        flex 
+                        justify-center 
+                        items-center
+                        h-[60px]
+                        cursor-pointer 
+                        text-center 
+                        py-4 
+                        rounded-xl 
+                        border-2 
+                        border-solid 
+                        hover:border-purple-400 
+                        hover:text-purple-400 
+                        hover:transition-all" 
+                        onClick={onSubmit}
+                    >
+                        { isFetching ?
+                        <FontAwesomeIcon icon={faSpinner} className={"btn-spinner text-transparent"}/>
+                        :
                         <span>Create Account</span>
+                        }
                     </div>
                 </form>
             </div>

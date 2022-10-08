@@ -29,7 +29,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="sticky bg-neutral-900">
+        <nav className="bg-neutral-900">
             <div className="flex justify-between items-center p-4 md:p-6 lg:p-8 relative">
                 <div className="flex gap-2">
                     <div className="flex gap-8 items-center">
