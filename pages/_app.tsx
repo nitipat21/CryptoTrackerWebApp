@@ -23,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  console.log(process.env.TEST_ENV)
 
   useEffect(() => {
     const handleStart = (url:any) => (url !== router.asPath) && setLoading(true);

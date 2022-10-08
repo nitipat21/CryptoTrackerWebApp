@@ -29,6 +29,8 @@ const LoginForm:FC = () => {
 
     const [focus, setFocus] = useState<String>("");
 
+    const [isFetching, setIsFetching] = useState<Boolean>(false);
+
     const onClickUsername = () => {
         usernameRef.current?.focus();
     }
@@ -46,15 +48,16 @@ const LoginForm:FC = () => {
             (async () => {
                 try {
                     // sign in
-                    await signInWithEmailAndPassword(auth, username, password)
+                    await signInWithEmailAndPassword(auth, username, password);
 
                     // get trackList from database
-                    const data = await getDocs(usersCollectionRef)
+                    const data = await getDocs(usersCollectionRef);
                                
                     data.docs.forEach((user) => {
                         if (user.data().uid === auth.currentUser?.uid) {
                             dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
                             dispatch(cryptoSlice.actions.setUserDocId(user.id));
+
                             if (user.data().trackList) {
                                 localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
                             } else {
@@ -75,15 +78,17 @@ const LoginForm:FC = () => {
     }
 
     const onDemoLogin = async () => {
+        setIsFetching(true)
         await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
 
         // get trackList from database
-        const data = await getDocs(usersCollectionRef)
+        const data = await getDocs(usersCollectionRef);
                                
         data.docs.forEach((user) => {
             if (user.data().uid === auth.currentUser?.uid) {
                 dispatch(cryptoSlice.actions.setTrackList(user.data().trackList));
                 dispatch(cryptoSlice.actions.setUserDocId(user.id));
+
                 if (user.data().trackList) {
                     localStorage.setItem("trackList", JSON.stringify(user.data().trackList));
                 } else {
@@ -92,7 +97,7 @@ const LoginForm:FC = () => {
                 localStorage.setItem("userDocId", JSON.stringify(user.id));
             }
         });
-
+        setIsFetching(false)
         router.push('/');
     }
 
@@ -176,6 +181,7 @@ const LoginForm:FC = () => {
                     </div>
                     <div className="cursor-pointer font-bold border-purple-400 text-center py-4 rounded-xl border-2 border-solid hover:border-purple-400 hover:text-purple-400 hover:transition-all" onClick={onDemoLogin}>
                         <span>Demo Log in</span>
+                        <span className="btn-spinner"></span>
                     </div>
                 </form>
                 <div className="text-center">
