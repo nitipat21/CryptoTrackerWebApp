@@ -28,16 +28,15 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                 <title>CryptoTracker | {`${coinInfo.symbol.toUpperCase()}`}</title>
             </Head>
             <main className='grid gap-8 p-4 sm:p-8 md:p-16'>
-                <div className='grid justify-center items-center gap-4'>
-                    <div className="text-center text-3xl font-bold">
+                <div className='grid justify-items-center items-center gap-4'>
+                    <div className="text-3xl font-bold">
                         <h1>{coinInfo.name} ({coinInfo.symbol.toUpperCase()})</h1>
                     </div>
-                    <div className='text-center text-xl opacity-60'>
+                    <div className='text-xl opacity-60'>
                         <h1>Coin Gecko Rank {coinInfo.coingecko_rank}</h1>
                     </div>
                     <div>
                         <Image 
-                        className="m-auto" 
                         src={coinInfo.image.large} 
                         alt={coinInfo.name}
                         width={160}
@@ -47,31 +46,31 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                     <div className="max-w-[75ch] py-8">{(coinInfo.description.en.split(". ")[0])}</div>
                 </div>
                 <Line
-                className="bg-neutral-800 p-4"
-                data={{
-                    labels: historicalData.map((coin:any) => {
-                    let date = new Date(coin[0]);
-                    let time =
-                    date.getHours() > 12
-                        ? `${date.getHours() - 12}:${date.getMinutes() > 10 ? `${date.getMinutes()}` : `0${date.getMinutes()}`} PM`
-                        : `${date.getHours()}:${date.getMinutes() > 10 ? `${date.getMinutes()}` : `0${date.getMinutes()}`} AM`;
-                        return days === 1 ? time : date.toLocaleDateString();
-                    }),
-                    datasets: [
-                    {
-                        data: historicalData.map((coin:any) => coin[1]),
-                        label: `Price ( Past ${days} Days ) in ${"A$"}`,
-                        borderColor: "#c084fc",
-                    },
-                    ],
-                }}
-                options={{
-                    elements: {
-                    point: {
-                        radius: 1,
-                    },
-                    },
-                }}
+                    className="bg-neutral-800 p-4"
+                    data={{
+                        labels: historicalData.map((coin:any) => {
+                        let date = new Date(coin[0]);
+                        let time =
+                        date.getHours() > 12
+                            ? `${date.getHours() - 12}:${date.getMinutes() > 10 ? `${date.getMinutes()}` : `0${date.getMinutes()}`} PM`
+                            : `${date.getHours()}:${date.getMinutes() > 10 ? `${date.getMinutes()}` : `0${date.getMinutes()}`} AM`;
+                            return days === 1 ? time : date.toLocaleDateString();
+                        }),
+                        datasets: [
+                        {
+                            data: historicalData.map((coin:any) => coin[1]),
+                            label: `Price ( Past ${days} Days ) in ${"A$"}`,
+                            borderColor: "#c084fc",
+                        },
+                        ],
+                    }}
+                    options={{
+                        elements: {
+                        point: {
+                            radius: 1,
+                        },
+                        },
+                    }}
                 />
                 <div className='grid grid-cols-2 sm:grid-cols-4 justify-center items-center gap-2'>
                     <div 
