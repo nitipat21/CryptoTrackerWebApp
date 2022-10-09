@@ -2,7 +2,7 @@ import { faCircleXmark, faEye, faEyeSlash, faSpinner, faXmark } from "@fortaweso
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth, usersCollectionRef } from "../config/firebase";
 import { getDocs } from '@firebase/firestore';
@@ -29,6 +29,8 @@ const LoginForm:FC = () => {
 
     const [focus, setFocus] = useState<String>("");
 
+    const [isEmailFormat, setIsEmailFormat] = useState<boolean>(false);
+
     const [isFetching, setIsFetching] = useState<Boolean>(false);
 
     const onClickUsername = () => {
@@ -42,11 +44,20 @@ const LoginForm:FC = () => {
     const onLogin = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
         
-        if (!username || !password) {
+        // check input
+        if (!username || !password || !isEmailFormat) {
+            // show warning
             setIsWarning(true);
+            if (!username || !isEmailFormat) {
+                usernameRef.current?.focus();
+            } else if (!password) {
+                passwordRef.current?.focus();
+            }
         } else {
-            setIsFetching(true);
             (async () => {
+                // start loading animation in button
+                setIsFetching(true);
+                
                 try {
                     // sign in
                     await signInWithEmailAndPassword(auth, username, password);
@@ -67,14 +78,18 @@ const LoginForm:FC = () => {
                             localStorage.setItem("userDocId", JSON.stringify(user.id));
                         }
                     });
+                    // stop loading animation in button
                     setIsFetching(false);
+                    // show success alert
                     dispatch(cryptoSlice.actions.setAlertStatus("success"));
                     dispatch(cryptoSlice.actions.setAlertMessage("Login successful"));
                     // redirect to home page
                     router.push('/');
 
                 } catch (error) {
+                    // stop loading animation in button
                     setIsFetching(false);
+                    // show fail alert
                     dispatch(cryptoSlice.actions.setAlertStatus("fail"));
                     dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
                 }
@@ -84,12 +99,17 @@ const LoginForm:FC = () => {
 
     const onDemoLogin = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
+
+        // clear all input
         setUsername("");
         setPassword("");
-        setIsFetching(true);
 
         (async ()=> {
             try{
+                // start loading animation in button
+                setIsFetching(true);
+
+                // firebase auth signin
                 await signInWithEmailAndPassword(auth, "nitipat.temp@gmail.com", "123456@Ab");
         
                 // get trackList from database
@@ -108,18 +128,31 @@ const LoginForm:FC = () => {
                         localStorage.setItem("userDocId", JSON.stringify(user.id));
                     }
                 });
+                // stop loading animation in button
                 setIsFetching(false)
+                // show success alert
                 dispatch(cryptoSlice.actions.setAlertStatus("success"));
                 dispatch(cryptoSlice.actions.setAlertMessage("Login successful"));
+                // redirect to home page
                 router.push('/');
             }
             catch(error) {
+                // stop loading animation in button
                 setIsFetching(false)
+                // show fail alert
                 dispatch(cryptoSlice.actions.setAlertStatus("fail"));
                 dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
             }
         })();
     }
+
+    useEffect(()=> {
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)) {
+            setIsEmailFormat(true);
+        } else {
+            setIsEmailFormat(false);
+        }
+    }, [username]);
 
     return (
         <div className="">
@@ -143,7 +176,7 @@ const LoginForm:FC = () => {
                                 ${focus !== 'username' && "text-neutral-300"}
                                 ${(isWarning && !username) && "text-red-400"}
                                 `
-                            }>* Username or email address</div>
+                            }>* Email address</div>
                             <input
                                 type="text" 
                                 name="username" 
@@ -174,6 +207,12 @@ const LoginForm:FC = () => {
                             <div className="flex px-4 gap-2 mt-1">
                                 <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
                                 <p>Enter an email/username.</p>
+                            </div>
+                        }
+                        { (isWarning && !isEmailFormat) && 
+                            <div className="flex px-4 gap-2 mt-1">
+                                <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
+                                <p>Invalid email format.</p>
                             </div>
                         }
                     </div>

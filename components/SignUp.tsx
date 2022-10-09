@@ -80,6 +80,7 @@ const Signup:FC = () => {
             (async () => {
                  // start loading animation in button
                 setIsFetching(true);
+                
                 try {
                     const res = await createUserWithEmailAndPassword(auth, username, password);
 
@@ -111,7 +112,7 @@ const Signup:FC = () => {
                     });
                     // stop loading animation in button
                     setIsFetching(false);
-                    // show alert component
+                    // show success alert
                     dispatch(cryptoSlice.actions.setAlertStatus("success"));
                     dispatch(cryptoSlice.actions.setAlertMessage("Signup successful"));
                     router.push('/')
@@ -119,7 +120,7 @@ const Signup:FC = () => {
                 } catch (error) {
                     // stop loading animation in button
                     setIsFetching(false);
-                    // show alert component
+                    // show fail alert
                     dispatch(cryptoSlice.actions.setAlertStatus("fail"));
                     dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
                 }
@@ -127,7 +128,7 @@ const Signup:FC = () => {
         }
     }
 
-    // check email pattern
+    // check email format
     useEffect(()=> {
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)) {
             setIsEmailFormat(true);
