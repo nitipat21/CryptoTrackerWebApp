@@ -68,13 +68,15 @@ const LoginForm:FC = () => {
                         }
                     });
                     setIsFetching(false);
-
+                    dispatch(cryptoSlice.actions.setAlertStatus("success"));
+                    dispatch(cryptoSlice.actions.setAlertMessage("Login successful"));
                     // redirect to home page
                     router.push('/');
 
                 } catch (error) {
                     setIsFetching(false);
-                    alert(error);
+                    dispatch(cryptoSlice.actions.setAlertStatus("fail"));
+                    dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
                 }
             })();
         }   
@@ -107,11 +109,14 @@ const LoginForm:FC = () => {
                     }
                 });
                 setIsFetching(false)
+                dispatch(cryptoSlice.actions.setAlertStatus("success"));
+                dispatch(cryptoSlice.actions.setAlertMessage("Login successful"));
                 router.push('/');
             }
             catch(error) {
                 setIsFetching(false)
-                alert(error);
+                dispatch(cryptoSlice.actions.setAlertStatus("fail"));
+                dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
             }
         })();
     }

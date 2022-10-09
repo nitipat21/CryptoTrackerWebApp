@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { cryptoSlice, selectUserDocId, selectUserState, selectUserTrackListState } from "../store/cryptoSlice";
+import { cryptoSlice, selectAlertStatusState, selectUserDocIdState, selectUserState, selectUserTrackListState } from "../store/cryptoSlice";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Alert from "./Alert";
@@ -22,7 +22,9 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
 
     const userTrackList = useSelector(selectUserTrackListState);
 
-    const userDocId = useSelector(selectUserDocId);
+    const userDocId = useSelector(selectUserDocIdState);
+
+    const alertStatus = useSelector(selectAlertStatusState);
 
     // update data to localstorage and database
     useEffect(()=>{
@@ -64,6 +66,15 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
         return () => unsubscribe()
     }, [])
 
+    // clear alert after 3s
+    useEffect(()=> {
+      if (alertStatus) {
+        setTimeout(()=> {
+          dispatch(cryptoSlice.actions.setAlertStatus(""));
+        }, 3000)
+      }
+    }, [alertStatus])
+
     return (
         <div>
             <Head>
@@ -71,7 +82,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
-            <Alert title="Alert" status="success"/>
+            {alertStatus && <Alert/>}
             <Navbar/>
             {children}
             <Footer/>

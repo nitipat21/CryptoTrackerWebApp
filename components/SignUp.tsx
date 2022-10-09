@@ -38,6 +38,8 @@ const Signup:FC = () => {
 
     const [isStrongPassword, setIsStrongPassword] = useState<boolean>(false);
 
+    const [isEmailFormat, setIsEmailFormat] = useState<boolean>(false);
+
     const [focus, setFocus] = useState<string>("");
 
     const [isFetching, setIsFetching] = useState<Boolean>(false);
@@ -60,15 +62,15 @@ const Signup:FC = () => {
 
     const onSubmit = (event:React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
         event.preventDefault();
-        
+
         // check input
-        if (!firstName || !lastName || !username || !isStrongPassword) {
+        if (!firstName || !lastName || !username || !isEmailFormat || !isStrongPassword) {
             setIsWarning(true);
             if (!firstName) {
                 firstNameRef.current?.focus();
             } else if (!lastName) {
                 lastNameRef.current?.focus();
-            } else if (!username) {
+            } else if (!username || !isEmailFormat) {
                 usernameRef.current?.focus();
             } else if (!isStrongPassword) {
                 passwordRef.current?.focus();
@@ -76,6 +78,7 @@ const Signup:FC = () => {
         } else {
             // signup
             (async () => {
+                 // start loading animation in button
                 setIsFetching(true);
                 try {
                     const res = await createUserWithEmailAndPassword(auth, username, password);
@@ -88,23 +91,16 @@ const Signup:FC = () => {
                         firstName: firstName,
                         lastName: lastName,
                         tracklist: []
-                    }).then(()=>{
-                        console.log("Create user data");
-                    }).catch((error)=>{
-                        alert(error);
                     })
 
                     // update display name
                     await updateProfile(auth.currentUser!, {
                         displayName: `${firstName} ${lastName}`, photoURL: ""
-                    }).then(()=>{
-                        console.log("update displayName");
-                    }).catch((error)=>{
-                        alert(error);
                     })
                     
+                    // get user data from database
                     const data = await getDocs(usersCollectionRef)
-                               
+                    // lookup user data by uid
                     data.docs.forEach((user) => {
                         if (user.data().uid === auth.currentUser?.uid) {
                             dispatch(cryptoSlice.actions.setTrackList([]));
@@ -113,18 +109,34 @@ const Signup:FC = () => {
                             localStorage.setItem("userDocId", JSON.stringify(user.id));
                         }
                     });
+                    // stop loading animation in button
                     setIsFetching(false);
+                    // show alert component
+                    dispatch(cryptoSlice.actions.setAlertStatus("success"));
+                    dispatch(cryptoSlice.actions.setAlertMessage("Signup successful"));
                     router.push('/')
 
                 } catch (error) {
+                    // stop loading animation in button
                     setIsFetching(false);
-                    alert(error);
+                    // show alert component
+                    dispatch(cryptoSlice.actions.setAlertStatus("fail"));
+                    dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
                 }
             })();
         }
     }
 
-    // check password
+    // check email pattern
+    useEffect(()=> {
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(username)) {
+            setIsEmailFormat(true);
+        } else {
+            setIsEmailFormat(false);
+        }
+    }, [username]);
+
+    // check password strength
     useEffect(()=>{
             const citeria1 = password.length > 8;
             const citeria2 = /\d/.test(password);
@@ -238,7 +250,13 @@ const Signup:FC = () => {
                         { (isWarning && !username) && 
                             <div className="flex px-4 gap-2 mt-1">
                                 <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
-                                <p>Enter an email/username.</p>
+                                <p>Enter an email.</p>
+                            </div>
+                        }
+                        { (isWarning && !isEmailFormat) && 
+                            <div className="flex px-4 gap-2 mt-1">
+                                <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
+                                <p>Invalid email format.</p>
                             </div>
                         }
                         <p className="text-sm mt-2 pb-2 ml-2">This will be your username</p>

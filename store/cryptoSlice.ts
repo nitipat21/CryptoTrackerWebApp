@@ -3,7 +3,7 @@ import { HYDRATE } from "next-redux-wrapper";
 import { AppState } from "./store"
 
 // type of state
-export interface cryptoState{
+export interface cryptoState {
     user:any;
     userDocId: any
     userTrackList:any[];
@@ -11,6 +11,8 @@ export interface cryptoState{
     trendingList:any[];
     search:string;
     sort:string;
+    alertStatus:string;
+    alertMessage:string;
 }
 
 // initial state
@@ -21,7 +23,9 @@ const initialState: cryptoState = {
     coinList: [],
     trendingList: [],
     search:"",
-    sort:"market_cap"
+    sort:"market_cap",
+    alertStatus:"",
+    alertMessage:"",
 }
 
 // actual slice
@@ -59,6 +63,12 @@ export const cryptoSlice = createSlice({
             state.userTrackList.splice(index, 1);
           }
         },
+        setAlertStatus: (state, action) => {
+          state.alertStatus = action.payload;
+        },
+        setAlertMessage: (state, action) => {
+          state.alertMessage = action.payload;
+        }
     },
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -82,6 +92,10 @@ export const selectUserState = (state:AppState) => state.crypto.user;
 
 export const selectUserTrackListState = (state:AppState) => state.crypto.userTrackList;
 
-export const selectUserDocId = (state:AppState) => state.crypto.userDocId;
+export const selectUserDocIdState = (state:AppState) => state.crypto.userDocId;
+
+export const selectAlertStatusState = (state:AppState) => state.crypto.alertStatus;
+
+export const selectAlertMessageState = (state:AppState) => state.crypto.alertMessage;
 
 export default cryptoSlice.reducer;
