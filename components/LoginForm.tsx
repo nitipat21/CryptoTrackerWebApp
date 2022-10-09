@@ -209,7 +209,7 @@ const LoginForm:FC = () => {
                                 <p>Enter an email/username.</p>
                             </div>
                         }
-                        { (isWarning && !isEmailFormat) && 
+                        { (isWarning && !isEmailFormat && username) && 
                             <div className="flex px-4 gap-2 mt-1">
                                 <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
                                 <p>Invalid email format.</p>
@@ -271,7 +271,7 @@ const LoginForm:FC = () => {
                         }
                     </div>
                     <div className="underline hover:text-purple-400 hover:transition-all">
-                        <a href="">Forgot your password?</a>
+                        <Link href="">Forgot your password?</Link>
                     </div>
                     <div className={`
                         flex 

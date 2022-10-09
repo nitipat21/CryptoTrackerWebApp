@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const HeroCarousel = () => {
 
@@ -65,7 +66,12 @@ const HeroCarousel = () => {
             >
                 <div className="font-bold opacity-60 text-lg">{index + 1}</div>
                 <div className="p-4">
-                    <img className="w-[120px] h-full aspect-square object-cover" src={coin.image} alt={coin.name}/>
+                    <Image 
+                    height={120}
+                    width={120}
+                    className="object-cover" 
+                    src={coin.image} 
+                    alt={coin.name}/>
                 </div>
                 <div>
                     <span className="mr-1 text-neutral-300">

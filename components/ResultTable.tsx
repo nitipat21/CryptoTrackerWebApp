@@ -2,6 +2,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faChartLine, faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -67,8 +68,13 @@ const ResultTable = () => {
         return (
             <tr key={coin.id} className="border-b-[1px] border-neutral-400 bg-neutral-800 hover:bg-neutral-900 transition-colors">
                 <td className="flex gap-4 justify-start p-6 items-center">
-                    <div className="w-[50px] h-[50px] shrink-0">
-                        <img src={coin.image} alt={coin.name} />
+                    <div className="shrink-0">
+                        <Image 
+                        src={coin.image} 
+                        alt={coin.name} 
+                        width={50}
+                        height={50}
+                        />
                     </div>
                     <div>
                         <h1>{coin.symbol.toUpperCase()}</h1>

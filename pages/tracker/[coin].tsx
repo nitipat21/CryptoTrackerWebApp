@@ -6,6 +6,7 @@ import {CategoryScale} from 'chart.js';
 import Chart from 'chart.js/auto';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Image from 'next/image';
 
 Chart.register(CategoryScale);
 
@@ -35,7 +36,13 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                         <h1>Coin Gecko Rank {coinInfo.coingecko_rank}</h1>
                     </div>
                     <div>
-                        <img className="m-auto max-w-[160px] max-h-[160px]" src={coinInfo.image.large} alt={coinInfo.name}/>
+                        <Image 
+                        className="m-auto" 
+                        src={coinInfo.image.large} 
+                        alt={coinInfo.name}
+                        width={160}
+                        height={160}
+                        />
                     </div>
                     <div className="max-w-[75ch] py-8">{(coinInfo.description.en.split(". ")[0])}</div>
                 </div>
