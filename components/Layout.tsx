@@ -7,6 +7,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { cryptoSlice, selectUserDocId, selectUserState, selectUserTrackListState } from "../store/cryptoSlice";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import Alert from "./Alert";
 
 type Props = {
     children?: ReactNode
@@ -23,6 +24,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
 
     const userDocId = useSelector(selectUserDocId);
 
+    // update data to localstorage and database
     useEffect(()=>{
       if (user) {
         if (userTrackList) {
@@ -43,6 +45,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
       }
     },[userTrackList])
 
+    // check auth and get data from localstorage everytime page is refreshed
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           if (user) {
@@ -68,6 +71,7 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>
+            <Alert title="Alert" status="success"/>
             <Navbar/>
             {children}
             <Footer/>

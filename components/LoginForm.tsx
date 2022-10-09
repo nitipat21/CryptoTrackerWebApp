@@ -8,7 +8,6 @@ import { auth, usersCollectionRef } from "../config/firebase";
 import { getDocs } from '@firebase/firestore';
 import { useDispatch } from "react-redux";
 import { cryptoSlice } from "../store/cryptoSlice";
-import { async } from "@firebase/util";
 
 const LoginForm:FC = () => {
 
