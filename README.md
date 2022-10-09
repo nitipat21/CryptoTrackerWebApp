@@ -3,8 +3,10 @@
 ## Link: https://cryptotrackerwebapp-1.vercel.app/
 
 ### Upcoming Feature
+- Loading animation in button during authentication
+- Alert component
 - Scrape twitter by coin name tag
-- Blog Community
+- Blog community
 
 ### Features
 - Track crypto currency real time (fetch data from https://www.coingecko.com/en/api)
