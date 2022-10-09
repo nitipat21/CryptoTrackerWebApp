@@ -10,11 +10,10 @@ import Navbar from "./Navbar";
 import Alert from "./Alert";
 
 type Props = {
-    children?: ReactNode
-    title?: string
+    children?: ReactNode;
  }
 
-const Layout = ({ children, title = 'This is the default title' }: Props) => {
+const Layout = ({ children }: Props) => {
 
     const dispatch = useDispatch();
 
@@ -78,7 +77,6 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
     return (
         <div>
             <Head>
-                <title>{title}</title>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             </Head>

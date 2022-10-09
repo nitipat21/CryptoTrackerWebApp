@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import { useDispatch } from 'react-redux';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout'
@@ -13,11 +14,14 @@ const Home = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
   dispatch(cryptoSlice.actions.setTrendingList(data));
 
   return (
-    <Layout title="CryptoTracker">
+    <>
+      <Head>
+        <title>CryptoTracker | Home</title>
+      </Head>
       <main className="min-h-screen">
         <Hero/>
       </main>
-    </Layout>
+    </>
   )
 }
 

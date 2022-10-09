@@ -1,5 +1,5 @@
+import Head from "next/head";
 import { useSelector } from "react-redux";
-import Layout from "../../components/Layout";
 import { selectUserState, selectUserTrackListState } from "../../store/cryptoSlice";
 
 const Profile = () => {
@@ -16,8 +16,11 @@ const Profile = () => {
     })
 
     return (
-        <Layout title="Profile">
-            <div className="bg-neutral-800 p-8 min-h-screen">
+        <>
+            <Head>
+                <title>CryptoTracker | Profile</title>
+            </Head>
+            <main className="bg-neutral-800 p-8 min-h-screen">
                 <div>
                     <h1 className="text-center text-2xl font-bold">Profile</h1>
                 </div>
@@ -32,8 +35,8 @@ const Profile = () => {
                         <span>My Tracklist:</span> <span>{tracklistElement}</span>
                     </div>
                 </div>
-            </div>
-        </Layout>
+            </main>
+        </>
     )
 }
 

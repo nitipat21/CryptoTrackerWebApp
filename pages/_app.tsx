@@ -11,6 +11,7 @@ import { wrapper } from '../store/store';
 import { Provider } from "react-redux";
 import { useRouter } from 'next/router';
 import Loading from '../components/Loading';
+import Layout from '../components/Layout';
 
 config.autoAddCss = false;
 
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
 
+  // rounter event listener when page change
   useEffect(() => {
     const handleStart = (url:any) => (url !== router.asPath) && setLoading(true);
     const handleComplete = (url:any) => (url === router.asPath) && setLoading(false);
@@ -39,6 +41,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   })
 
+  // stop loading page when page loaded
   useEffect(()=>{
     setPageLoaded(true);
   },[])
@@ -46,7 +49,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return pageLoaded ?
     <Provider store={store}>
       {loading && <Loading/>}
-      <Component {...props} />
+      <Layout>
+        <Component {...props} />
+      </Layout>
     </Provider> 
     : null;
 }

@@ -1,12 +1,15 @@
-import Layout from "../../components/Layout";
+import Head from "next/head";
 
 const Blog = () => {
     return (
-        <Layout title="Blog">
+        <>
+            <Head>
+                <title>CryptoTracker | Blog</title>
+            </Head>
             <div className="bg-neutral-800">
                 
             </div>
-        </Layout>
+        </>
     );
 }
 

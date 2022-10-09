@@ -33,6 +33,7 @@ const Navbar = () => {
         // show alert component
         dispatch(cryptoSlice.actions.setAlertStatus("success"));
         dispatch(cryptoSlice.actions.setAlertMessage("Logout successful"));
+        // redirect to home page
         rounter.push("/");
     }
 

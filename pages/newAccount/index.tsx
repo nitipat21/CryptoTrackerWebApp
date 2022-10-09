@@ -1,13 +1,16 @@
-import Layout from "../../components/Layout";
+import Head from "next/head";
 import Signup from "../../components/SignUp";
 
 const NewAccount = () => {
     return (
-        <Layout title="New Account">
-            <div className="bg-neutral-800">
+        <>
+            <Head>
+                <title>CryptoTracker | NewAccount</title>
+            </Head>
+            <main className="bg-neutral-800">
                <Signup/>
-            </div>
-        </Layout>
+            </main>
+        </>
     );
 }
 

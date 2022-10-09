@@ -115,7 +115,8 @@ const Signup:FC = () => {
                     // show success alert
                     dispatch(cryptoSlice.actions.setAlertStatus("success"));
                     dispatch(cryptoSlice.actions.setAlertMessage("Signup successful"));
-                    router.push('/')
+                    // redirect to home page
+                    router.push('/');
 
                 } catch (error) {
                     // stop loading animation in button

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { InferGetServerSidePropsType } from 'next'
+import Head from 'next/head';
 import { useDispatch } from 'react-redux';
-import Layout from '../../components/Layout';
 import Tracker from '../../components/Tracker';
 import { CoinList } from '../../cryptoAPI/api';
 import { cryptoSlice } from '../../store/cryptoSlice';
@@ -14,11 +14,14 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
     dispatch(cryptoSlice.actions.setCoinList(data));    
 
     return (
-        <Layout title="CryptoTracker">
+        <>
+            <Head>
+                <title>CryptoTracker | Tracker</title>
+            </Head>
             <main className="">
                 <Tracker/>
             </main>
-        </Layout>
+        </>
     )
 }
 

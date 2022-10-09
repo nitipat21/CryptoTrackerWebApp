@@ -1,6 +1,6 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Layout from "../../components/Layout";
 import LoginForm from "../../components/LoginForm";
 import { auth } from "../../config/firebase";
 
@@ -15,11 +15,14 @@ const Login = () => {
     },[])
 
     return (
-        <Layout title="Login">
-            <div className="bg-neutral-800">
+        <>
+            <Head>
+                <title>CryptoTracker | Login</title>
+            </Head>
+            <main className="bg-neutral-800">
                 <LoginForm/>
-            </div>
-        </Layout>
+            </main>
+        </>
     );
 }
 
