@@ -71,22 +71,51 @@ const Navbar = () => {
                                     <button>Profile</button>
                                 </Link>
                             </div>
-                            <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
-                                <button onClick={logout}>Log out</button>
+                            <div 
+                                onClick={logout}
+                                className={`
+                                cursor-pointer 
+                                border-2 
+                                border-solid 
+                                border-purple-400 
+                                p-3 
+                                rounded-xl 
+                                hover:scale-105 
+                                hover:text-purple-400 
+                                hover:transition-all 
+                                ${rounter.pathname === "/newAccount" && "text-purple-400"}`}
+                            >
+                                <button>Log out</button>
                             </div>
                         </>
                             :
                         <>
-                            <div className={`${rounter.pathname === "/login" && "text-purple-400"} hover:text-purple-400 hover:transition-all`}>
+                            <div className={`
+                            hover:text-purple-400 
+                            hover:transition-all
+                            ${rounter.pathname === "/login" ? "text-purple-400" : ""}`}
+                            >
                                 <Link href={('/login')}>
                                     <button>Log in</button>
                                 </Link>
                             </div>
-                            <div className={`${rounter.pathname === "/newAccount" && "text-purple-400"} cursor-pointer border-2 border-solid border-purple-400 p-3 rounded-xl hover:scale-105 hover:text-purple-400 hover:transition-all`}>
-                                <Link href={('/newAccount')}>
+                            <Link href={('/newAccount')}>
+                                <div 
+                                    className={` 
+                                    cursor-pointer 
+                                    border-2 
+                                    border-solid 
+                                    border-purple-400 
+                                    p-3 
+                                    rounded-xl 
+                                    hover:scale-105 
+                                    hover:text-purple-400 
+                                    hover:transition-all 
+                                    ${rounter.pathname === "/newAccount" ? "text-purple-400" : ""}`}
+                                >
                                     <button>Create You Account</button>
-                                </Link>
-                            </div>
+                                </div>
+                            </Link>
                         </>
                         }
                     </div>
