@@ -95,7 +95,7 @@ const ResultTable = () => {
                 </td>
                 <td className="p-6 text-right">
                     <div>
-                        <span>{formatMoney(coin.current_price)}</span>
+                        <span>{coin.current_price <= 0.01 ? `A$${coin.current_price}` : formatMoney(coin.current_price)}</span>
                     </div>
                 </td>
                 <td className="p-6 text-right">
