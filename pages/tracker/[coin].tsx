@@ -35,7 +35,7 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                     <div className='text-xl opacity-60'>
                         <h1>Coin Gecko Rank {coinInfo.coingecko_rank}</h1>
                     </div>
-                    <div>
+                    <div className='bg-neutral-800 p-4 rounded-lg'>
                         <Image 
                         src={coinInfo.image.large} 
                         alt={coinInfo.name}
@@ -46,7 +46,7 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                     <div className="max-w-[75ch] py-8">{(coinInfo.description.en.split(". ")[0])}</div>
                 </div>
                 <Line
-                    className="bg-neutral-800 p-4"
+                    className="bg-neutral-800 p-4 rounded-lg"
                     data={{
                         labels: historicalData.map((coin:any) => {
                         let date = new Date(coin[0]);

@@ -92,7 +92,7 @@ const Navbar = () => {
                         <>
                             <div className={`
                             hover:text-purple-400 
-                            hover:transition-all
+                            hover:transition-all 
                             ${rounter.pathname === "/login" ? "text-purple-400" : ""}`}
                             >
                                 <Link href={('/login')}>
