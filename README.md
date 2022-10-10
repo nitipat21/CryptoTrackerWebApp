@@ -1,6 +1,6 @@
 # CryptoTracker WebApp
 
-## Link: https://cryptotrackerwebapp-1.vercel.app/
+## Link: https://new-crypto-tracker-app.vercel.app
 
 ### Upcoming Feature
 - Loading animation in button during authentication
