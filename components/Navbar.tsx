@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import Sidebar from "./Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +36,11 @@ const Navbar = () => {
         // redirect to home page
         rounter.push("/");
     }
+
+    // close sidebar when redirect to other pages
+    useEffect(()=>{
+        setIsShowSidebar(false);
+    },[rounter.pathname])
 
     return (
         <nav className="bg-neutral-900">
