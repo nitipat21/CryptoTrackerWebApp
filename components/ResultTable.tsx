@@ -4,7 +4,7 @@ import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState, cryptoSlice } from "../store/cryptoSlice";
 import formatMoney from "../utils/fomatCurrency";
@@ -39,6 +39,22 @@ const ResultTable = () => {
         }
     }
 
+    const onChangePage = (event:ChangeEvent<HTMLInputElement>) => {
+        if (parseInt(event.target.value) <= pageAmount) {
+            setPage(parseInt(event.target.value));
+        } else if (parseInt(event.target.value) > pageAmount) {
+            setPage(pageAmount);
+        } else {
+            setPage(0);
+        }
+    }
+
+    const onBlurPage = (event:ChangeEvent<HTMLInputElement>) => {
+        if (!page) {
+            setPage(1);
+        }
+    }
+
     const addCoin = (coin:any) => () => {
         dispatch(cryptoSlice.actions.addCoinToTrackList(coin));
         dispatch(cryptoSlice.actions.setAlertStatus("success"));
@@ -51,10 +67,12 @@ const ResultTable = () => {
         dispatch(cryptoSlice.actions.setAlertMessage(`${coin} is deleted from your list`));
     } 
 
+    // filter after searched
     const coinsSearched = coinsList.filter((coin:any)=>{
         return coin.name.toLowerCase().includes(search) || coin.symbol.toLowerCase().includes(search)
     })
-        
+    
+    // sorted after filter
     const coinSorted = coinsSearched.sort((a:any, b:any) => {
         if (sort === "market_cap") {
             return b.market_cap - a.market_cap;
@@ -67,6 +85,7 @@ const ResultTable = () => {
         }
     })
 
+    // if select my tracklist filter coin in tracklist from coinlist
     const coinOnTrackList = coinSorted.filter((coin:any) => {
         if (sort === "mytracklist") {
             return userTrackList.includes(coin.id)
@@ -111,7 +130,7 @@ const ResultTable = () => {
                     </div>
                 </td>
                 <td className="p-6 z-50">
-                    <div className="flex gap-4">
+                    <div className="flex justify-center items-center gap-4">
                         <div className="cursor-pointer hover:scale-110 hover:transition-all">
                             <Link href={(`/tracker/${coin.id}?days=1`)} passHref>
                                 <a target={"_blank"}>
@@ -137,7 +156,7 @@ const ResultTable = () => {
     // change amount of page by amounth of items
     useEffect(() => {
         if (coinOnTrackList.length / 10 > 1) {
-            setPageAmount(coinOnTrackList.length % 10 === 0 ? (coinOnTrackList.length / 10) : (Math.round(coinOnTrackList.length / 10) + 1) );
+            setPageAmount(coinOnTrackList.length % 10 === 0 ? (coinOnTrackList.length / 10) : (Math.ceil(coinOnTrackList.length / 10)));
         } else {
             setPageAmount(1);
         }
@@ -171,9 +190,30 @@ const ResultTable = () => {
             </table>
             <div>
                 <div className="flex items-center justify-center gap-4 absolute left-1/2 -translate-x-1/2 text-xl p-4">
-                    <div onClick={onLeftArrow} className={`cursor-pointer ${page === 1 && "opacity-30 cursor-default"}`}>{<FontAwesomeIcon icon={faChevronLeft}/>}</div>
-                    <div>{page} - {pageAmount}</div>
-                    <div onClick={onRightArrow} className={`cursor-pointer ${page === pageAmount && "opacity-30 cursor-default"}`}>{<FontAwesomeIcon icon={faChevronRight}/>}</div>
+                    <div 
+                    onClick={onLeftArrow} 
+                    className={`cursor-pointer ${page === 1 && "opacity-30 cursor-default"}`}
+                    >
+                        {<FontAwesomeIcon icon={faChevronLeft}/>}
+                    </div>
+                    <div>
+                        <input 
+                        type="text" 
+                        name="page" 
+                        id="page" 
+                        maxLength={2} 
+                        value={page} 
+                        onChange={onChangePage}
+                        onBlur={onBlurPage}
+                        className="text-center max-w-[3ch] bg-neutral-900 rounded-lg"
+                        /> - {pageAmount}
+                        </div>
+                    <div 
+                    onClick={onRightArrow} 
+                    className={`cursor-pointer ${page === pageAmount && "opacity-30 cursor-default"}`}
+                    >
+                        {<FontAwesomeIcon icon={faChevronRight}/>}
+                    </div>
                 </div>
             </div>
         </div>
