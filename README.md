@@ -1,6 +1,6 @@
 # CryptoTracker WebApp
 
-## Link: https://new-crypto-tracker-app.vercel.app
+## Link: https://cryptotrackerwebapp.vercel.app/
 
 ### Upcoming Feature
 - Scrape twitter by coin name tag
