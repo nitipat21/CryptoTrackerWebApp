@@ -3,8 +3,6 @@
 ## Link: https://new-crypto-tracker-app.vercel.app
 
 ### Upcoming Feature
-- Loading animation in button during authentication
-- Alert component
 - Scrape twitter by coin name tag
 - Blog community
 
