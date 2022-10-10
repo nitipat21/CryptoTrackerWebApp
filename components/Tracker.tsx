@@ -20,7 +20,7 @@ const Tracker = () => {
     }
 
     return (
-        <div className="px-4 sm:px-16 lg:px-32 py-8 max-w-[1440px] m-auto mb-8">
+        <div className="px-4 sm:px-16 lg:px-32 py-8 max-w-[1440px] m-auto mb-8 min-h-screen">
             <div className="grid gap-8 rounded-lg">
                 <div>
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-center">

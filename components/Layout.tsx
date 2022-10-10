@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, db } from "../config/firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { cryptoSlice, selectAlertStatusState, selectUserDocIdState, selectUserState, selectUserTrackListState } from "../store/cryptoSlice";
+import { cryptoSlice, selectAlertStatusState, selectAlertTimeout, selectUserDocIdState, selectUserState, selectUserTrackListState } from "../store/cryptoSlice";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Alert from "./Alert";
@@ -37,11 +37,14 @@ const Layout = ({ children }: Props) => {
       }
       if (userDocId) {
         (async()=> {
-          const docRef = doc(db, "users", userDocId);
-          const newFields = { trackList: userTrackList };
-          await updateDoc(docRef, newFields)
-          .then(()=>console.log("update doc"))
-          .catch((error)=>console.error(error))
+          try {
+            const docRef = doc(db, "users", userDocId);
+            const newFields = { trackList: userTrackList };
+            await updateDoc(docRef, newFields);
+          } catch (error) {
+            dispatch(cryptoSlice.actions.setAlertStatus("fail"));
+            dispatch(cryptoSlice.actions.setAlertMessage(`${error}`));
+          }
         })();
       }
     },[userTrackList])
@@ -73,7 +76,7 @@ const Layout = ({ children }: Props) => {
         }, 3000)
       }
     }, [alertStatus])
-
+    
     return (
         <div>
             <Head>

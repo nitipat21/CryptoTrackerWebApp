@@ -5,7 +5,7 @@ import { AppState } from "./store"
 // type of state
 export interface cryptoState {
     user:any;
-    userDocId: any
+    userDocId:any;
     userTrackList:any[];
     coinList:any[];
     trendingList:any[];
@@ -13,6 +13,7 @@ export interface cryptoState {
     sort:string;
     alertStatus:string;
     alertMessage:string;
+    alertTimeout:number;
 }
 
 // initial state
@@ -26,6 +27,7 @@ const initialState: cryptoState = {
     sort:"market_cap",
     alertStatus:"",
     alertMessage:"",
+    alertTimeout:0,
 }
 
 // actual slice
@@ -68,6 +70,9 @@ export const cryptoSlice = createSlice({
         },
         setAlertMessage: (state, action) => {
           state.alertMessage = action.payload;
+        },
+        setAlertTimeout: (state, action) => {
+          state.alertTimeout = action.payload;
         }
     },
     extraReducers: {
@@ -97,5 +102,7 @@ export const selectUserDocIdState = (state:AppState) => state.crypto.userDocId;
 export const selectAlertStatusState = (state:AppState) => state.crypto.alertStatus;
 
 export const selectAlertMessageState = (state:AppState) => state.crypto.alertMessage;
+
+export const selectAlertTimeout = (state:AppState) => state.crypto.alertTimeout;
 
 export default cryptoSlice.reducer;

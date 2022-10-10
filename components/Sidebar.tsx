@@ -13,12 +13,21 @@ const Sidebar = () => {
 
     const user = useSelector(selectUserState);
 
-    const logout = async () => {
+    const logout = () => {
+        // clear user data in redux
         dispatch(cryptoSlice.actions.setUser(null));
         dispatch(cryptoSlice.actions.setUserDocId(null));
         dispatch(cryptoSlice.actions.setTrackList([]));
+        // clear user data in local storage
         localStorage.clear();
-        await signOut(auth);
+        // sign out from firebase auth
+        (async () => {
+            await signOut(auth)
+        })();
+        // show alert component
+        dispatch(cryptoSlice.actions.setAlertStatus("success"));
+        dispatch(cryptoSlice.actions.setAlertMessage("Logout successful"));
+        // redirect to home page
         rounter.push("/");
     }
 

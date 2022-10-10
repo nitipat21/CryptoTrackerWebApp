@@ -4,7 +4,7 @@ import { faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCoinListState, selectSortState, selectSearchState, selectUserTrackListState, cryptoSlice } from "../store/cryptoSlice";
 import formatMoney from "../utils/fomatCurrency";
@@ -38,6 +38,18 @@ const ResultTable = () => {
             window.scroll(0, 75);
         }
     }
+
+    const addCoin = (coin:any) => () => {
+        dispatch(cryptoSlice.actions.addCoinToTrackList(coin));
+        dispatch(cryptoSlice.actions.setAlertStatus("success"));
+        dispatch(cryptoSlice.actions.setAlertMessage(`${coin} is added to your list`));
+    }
+
+    const deleteCoin = (coin:any) => () => {
+        dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin));
+        dispatch(cryptoSlice.actions.setAlertStatus("success"));
+        dispatch(cryptoSlice.actions.setAlertMessage(`${coin} is deleted from your list`));
+    } 
 
     const coinsSearched = coinsList.filter((coin:any)=>{
         return coin.name.toLowerCase().includes(search) || coin.symbol.toLowerCase().includes(search)
@@ -102,17 +114,17 @@ const ResultTable = () => {
                     <div className="flex gap-4">
                         <div className="cursor-pointer hover:scale-110 hover:transition-all">
                             <Link href={(`/tracker/${coin.id}?days=1`)} passHref>
-                                <a href="" target={"_blank"}>
+                                <a target={"_blank"}>
                                     <FontAwesomeIcon icon={faChartLine} className={`text-2xl transition-all ${trend24h > 0 ? "text-green-400" : "text-red-400" }`}/>
                                 </a>
                             </Link>
                         </div>
                         {userTrackList && userTrackList.includes(coin.id) ?
-                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={()=>dispatch(cryptoSlice.actions.deleteCoinFromTrackList(coin.id))}>
+                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={deleteCoin(coin.id)}>
                             <FontAwesomeIcon icon={faSolidHeart} className="text-2xl text-purple-400"/>
                         </div>
-                        :
-                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={()=>dispatch(cryptoSlice.actions.addCoinToTrackList(coin.id))}>
+                        :   
+                        <div className="cursor-pointer hover:scale-110 hover:transition-all" onClick={addCoin(coin.id)}>
                             <FontAwesomeIcon icon={faHeart} className="text-2xl text-purple-400"/>
                         </div>
                         }
@@ -122,18 +134,21 @@ const ResultTable = () => {
         );
     })
 
+    // change amount of page by amounth of items
     useEffect(() => {
-        if (Math.round(coinOnTrackList.length / 10) > 1) {
-            setPageAmount(Math.round(coinOnTrackList.length / 10));
+        if (coinOnTrackList.length / 10 > 1) {
+            setPageAmount(coinOnTrackList.length % 10 === 0 ? (coinOnTrackList.length / 10) : (Math.round(coinOnTrackList.length / 10) + 1) );
         } else {
             setPageAmount(1);
         }
     }, [coinOnTrackList.length])
     
+    // back to page 1 when users are searching
     useEffect(()=>{
         setPage(1);
     },[search])
 
+    // back to page 1 when users change sort type
     useEffect(()=> {
         setPage(1);
     },[sort])

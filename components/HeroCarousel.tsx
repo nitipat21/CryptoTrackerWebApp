@@ -6,6 +6,7 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import Link from "next/link";
 
 const HeroCarousel = () => {
 
@@ -66,12 +67,16 @@ const HeroCarousel = () => {
             >
                 <div className="font-bold opacity-60 text-lg">{index + 1}</div>
                 <div className="p-4">
-                    <Image 
-                    height={120}
-                    width={120}
-                    className="object-cover" 
-                    src={coin.image} 
-                    alt={coin.name}/>
+                    <Link href={(`/tracker/${coin.id}?days=1`)} passHref>
+                        <a target={"_blank"}>
+                            <Image 
+                            height={120}
+                            width={120} 
+                            objectFit='cover' 
+                            src={coin.image} 
+                            alt={coin.name}/>
+                        </a>
+                    </Link>
                 </div>
                 <div>
                     <span className="mr-1 text-neutral-300">
