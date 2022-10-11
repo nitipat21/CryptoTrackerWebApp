@@ -12,6 +12,8 @@ Chart.register(CategoryScale);
 
 const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
+    const parser = new DOMParser();
+
     const historicalData= data.historicalData.prices;
 
     const days = data.days;
@@ -22,6 +24,12 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
 
     const daysQuery = router.query.days;
 
+    const coinDescription = parser.parseFromString(
+        `${coinInfo.description.en.split(". ")[0]} ${coinInfo.description.en.split(". ")[1]}.`
+        ,'text/html'
+    );
+    
+    console.log(data.coinInfo)
     return (
         <>
             <Head>
@@ -43,7 +51,7 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
                         height={160}
                         />
                     </div>
-                    <div className="max-w-[75ch] py-8">{(coinInfo.description.en.split(". ")[0])}</div>
+                    <div className="max-w-[75ch] py-8">{coinDescription.body.textContent}</div>
                 </div>
                 <Line
                     className="bg-neutral-800 p-4 rounded-lg"
