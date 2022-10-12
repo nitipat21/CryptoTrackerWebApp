@@ -3,13 +3,13 @@ import { getAuth } from 'firebase/auth'
 import { getFirestore, collection } from "@firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAtxs_mE9ZP-hwbpq2YY3jy75QOcvrNI58",
-    authDomain: "cryptotrackerwebapp.firebaseapp.com",
-    projectId: "cryptotrackerwebapp",
-    storageBucket: "cryptotrackerwebapp.appspot.com",
-    messagingSenderId: "912887911450",
-    appId: "1:912887911450:web:4a49000d166bf940ce6da3",
-    measurementId: "G-SRNFC7M730"
+    apiKey:process.env.FIREBASE_API_KEY,
+    authDomain:process.env.FIREBASE_AUTH_DOMAIN,
+    projectId:process.env.FIREBASE_PROJECT_ID,
+    storageBucket:process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId:process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId:process.env.FIREBASE_APP_ID,
+    measurementId:process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

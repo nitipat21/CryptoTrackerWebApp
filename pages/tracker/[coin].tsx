@@ -29,7 +29,6 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
         ,'text/html'
     );
     
-    console.log(data.coinInfo)
     return (
         <>
             <Head>
