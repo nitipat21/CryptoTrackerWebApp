@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import fetchTwitterData from "../../twitter/fetchAPI"
+import fetchTwitterData from "../../twitterAPI/api"
 
-export default async function handler(req:NextApiRequest, res:NextApiResponse) {
+export default async function handler(request:NextApiRequest, response:NextApiResponse) {
     try {
-        const result = await fetchTwitterData();
-        res.status(200).json({ result })
+        const result = await fetchTwitterData(request);
+        response.status(200).json({ result })
     } catch (err) {
-        res.status(500).json({ error: err })
+        response.status(500).json({ error: err })
     }
 }
