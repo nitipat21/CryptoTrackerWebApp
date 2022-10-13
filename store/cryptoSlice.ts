@@ -13,21 +13,23 @@ export interface cryptoState {
     sort:string;
     alertStatus:string;
     alertMessage:string;
-    alertTimeout:number;
+    twitterList:any[];
+    twitterNextToken:string;
 }
 
 // initial state
 const initialState: cryptoState = {
-    user: null,
-    userDocId: null,
-    userTrackList: [],
-    coinList: [],
-    trendingList: [],
+    user:null,
+    userDocId:null,
+    userTrackList:[],
+    coinList:[],
+    trendingList:[],
     search:"",
     sort:"market_cap",
     alertStatus:"",
     alertMessage:"",
-    alertTimeout:0,
+    twitterList:[],
+    twitterNextToken:"",
 }
 
 // actual slice
@@ -71,8 +73,11 @@ export const cryptoSlice = createSlice({
         setAlertMessage: (state, action) => {
           state.alertMessage = action.payload;
         },
-        setAlertTimeout: (state, action) => {
-          state.alertTimeout = action.payload;
+        setTwitterList: (state, action) => {
+          state.twitterList = action.payload;
+        },
+        setTwitterNextToken: (state, action) => {
+          state.twitterNextToken = action.payload;
         }
     },
     extraReducers: {
@@ -85,6 +90,7 @@ export const cryptoSlice = createSlice({
     },
 })
 
+// export state
 export const selectCoinListState = (state:AppState) => state.crypto.coinList;
 
 export const selectTrendingListState = (state:AppState) => state.crypto.trendingList;
@@ -103,6 +109,8 @@ export const selectAlertStatusState = (state:AppState) => state.crypto.alertStat
 
 export const selectAlertMessageState = (state:AppState) => state.crypto.alertMessage;
 
-export const selectAlertTimeout = (state:AppState) => state.crypto.alertTimeout;
+export const selectTwitterListState = (state:AppState) => state.crypto.twitterList;
+
+export const selectTwitterNextTokenState = (state:AppState) => state.crypto.twitterNextToken;
 
 export default cryptoSlice.reducer;

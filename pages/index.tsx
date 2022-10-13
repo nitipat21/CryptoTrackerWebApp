@@ -6,13 +6,18 @@ import Hero from '../components/Hero';
 import HeroTwitter from '../components/HeroTwitter';
 import { TrendingCoins } from '../cryptoAPI/api';
 import { cryptoSlice } from '../store/cryptoSlice';
+import fetchTwitterData from '../twitterAPI/api';
 
-const Home = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home = ({ coinData, twitterData }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
   const dispatch = useDispatch();
-  
-  dispatch(cryptoSlice.actions.setTrendingList(data));
-  
+
+  dispatch(cryptoSlice.actions.setTrendingList(coinData));
+
+  dispatch(cryptoSlice.actions.setTwitterList(twitterData.data));
+
+  dispatch(cryptoSlice.actions.setTwitterNextToken(twitterData.meta?.next_token));
+
   return (
     <>
       <Head>
@@ -28,9 +33,16 @@ const Home = ({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) 
 
 export const getServerSideProps = async () => {
 
-  const { data } = await axios.get(TrendingCoins("AUD"));
+  const coinData = await axios.get(TrendingCoins("AUD"));
 
-  return { props: { data } }
+  const twitterData = await fetchTwitterData();
+
+  return { 
+    props: { 
+      coinData:coinData.data, 
+      twitterData:twitterData 
+    } 
+  }
 }
 
 export default Home;
