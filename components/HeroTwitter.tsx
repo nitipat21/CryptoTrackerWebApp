@@ -19,7 +19,7 @@ const HeroTwitter = () => {
     const tweetElements = twitterList.map((tweet:any) => {
         return (
           <div key={tweet.id} className="flex-shrink-0 w-full">
-            <TwitterTweetEmbed key={tweet.id} tweetId={tweet.id} options={{theme: 'dark' }}/>
+            <TwitterTweetEmbed key={tweet.id} tweetId={tweet.id} options={{theme: 'dark'}}/>
           </div>
         );
     });
@@ -49,7 +49,7 @@ const HeroTwitter = () => {
             dispatch(cryptoSlice.actions.setTwitterList(response.data.result.data));
 
             dispatch(cryptoSlice.actions.setTwitterNextToken(response.data.result.meta.next_token));
-            console.log(twitterNextToken)
+
             setIsFetching(false);
         })();
     }
