@@ -132,7 +132,7 @@ const ResultTable = () => {
                 <td className="p-6 z-50">
                     <div className="flex justify-center items-center gap-4">
                         <div className="cursor-pointer hover:scale-110 hover:transition-all">
-                            <Link href={(`/tracker/${coin.id}?days=1`)} passHref>
+                            <Link href={(`/tracker/${coin.id}?days=1&symbol=${coin.symbol.toUpperCase()}`)} passHref>
                                 <a target={"_blank"}>
                                     <FontAwesomeIcon icon={faChartLine} className={`text-2xl transition-all ${trend24h > 0 ? "text-green-400" : "text-red-400" }`}/>
                                 </a>

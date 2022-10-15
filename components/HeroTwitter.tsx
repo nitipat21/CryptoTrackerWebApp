@@ -27,7 +27,7 @@ const HeroTwitter = () => {
     const getTweetNextPage = async () => {
         setIsFetching(true);
 
-        const response = await axios.get(`/api/twitter?&next_token=${twitterNextToken}`);
+        const response = await axios.get(`/api/twitter?&next_token=${twitterNextToken}&hashtag=${hashtag}`);
 
         dispatch(cryptoSlice.actions.setTwitterList(response.data.result.data));
 
@@ -58,12 +58,12 @@ const HeroTwitter = () => {
         <div className="my-16 mx-auto max-w-[1440px]">
 
             <div className="py-8 grid gap-4 bg-neutral-900 border-solid border border-transparent">
-                <h1 className="text-center font-bold text-[1.5rem] lg:text-[1.75rem]">Recent Crypto Twitter</h1>
-                <ul className="grid grid-cols-2 text-center sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 text-neutral-500 gap-4 lg:text-[1.25rem]">
+                <h1 className="text-center font-bold text-[1.5rem] lg:text-[1.75rem]">Recent {hashtag} Tweets</h1>
+                <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 text-neutral-500 gap-4 lg:text-[1.25rem]">
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "BTC" ? "text-purple-400" : ""}
                     `}>
                         #BTC
@@ -71,7 +71,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "ETH" ? "text-purple-400" : ""}
                     `}>
                         #ETH
@@ -79,7 +79,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "XRP" ? "text-purple-400" : ""}
                     `}>
                         #XRP
@@ -87,7 +87,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "SOL" ? "text-purple-400" : ""}
                     `}>
                         #SOL
@@ -95,7 +95,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "BNB" ? "text-purple-400" : ""}
                     `}>
                         #BNB
@@ -103,7 +103,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "DOGE" ? "text-purple-400" : ""}
                     `}>
                         #DOGE
@@ -111,7 +111,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "ADA" ? "text-purple-400" : ""}
                     `}>
                         #ADA
@@ -119,7 +119,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "LINK" ? "text-purple-400" : ""}
                     `}>
                         #LINK
@@ -127,7 +127,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "DOT" ? "text-purple-400" : ""}
                     `}>
                         #DOT
@@ -135,7 +135,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "XLM" ? "text-purple-400" : ""}
                     `}>
                         #XLM
@@ -143,7 +143,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "Cryptocurrency" ? "text-purple-400" : ""}
                     `}>
                         #Cryptocurrency
@@ -151,7 +151,7 @@ const HeroTwitter = () => {
                     <li 
                     onClick={getTweetWithTag} 
                     className={`
-                    cursor-pointer 
+                    cursor-pointer hover:scale-105 transition-all w-fit justify-self-center hover:text-neutral-400
                     ${hashtag === "Cryptomeme" ? "text-purple-400" : ""}
                     `}>
                         #Cryptomeme

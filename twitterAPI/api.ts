@@ -10,7 +10,7 @@ const fetchTwitterData = async (request?:NextApiRequest, response?:NextApiRespon
   const hashtag = request?.query?.hashtag;
 
   const result = await client.tweets.tweetsRecentSearch({
-    "query": `cryptocurrency cryptonews crypto blockchain lang:en ${hashtag ? hashtag : ""}`,
+    "query": `(cryptocurrency OR cryptonews OR crypto OR blockchain) -onlyfan lang:en ${hashtag && hashtag !== "Cryptocurrency" ? hashtag : ""}`,
     "max_results": 10,
     "sort_order": "recency",
     "next_token": `${next_token ? next_token : ""}`
