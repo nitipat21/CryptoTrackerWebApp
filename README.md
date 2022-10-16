@@ -3,10 +3,10 @@
 ## Link: https://cryptotrackerwebapp.vercel.app/
 
 ### Upcoming Feature
-- Scrape twitter by coin name tag
 - Blog community
 
 ### Features
+- Scrape twitter by coin name tag
 - Track crypto currency real time (fetch data from https://www.coingecko.com/en/api)
 - Search crypto currency by name
 - Sort crypto currency by market cap, price and 24 change percentage.
