@@ -63,7 +63,7 @@ const TrackerPage = ({ data }: InferGetServerSidePropsType<typeof getServerSideP
             <Head>
                 <title>CryptoTracker | {`${coinData.symbol.toUpperCase()}`}</title>
             </Head>
-            <main className='grid gap-8 p-4 sm:p-8 md:p-16'>
+            <main className='grid gap-8 px-4 py-16 sm:px-8 md:px-16'>
                 <div className='grid justify-items-center items-center gap-4'>
                     <div className="text-3xl font-bold">
                         <h1>{coinData.name} ({coinData.symbol.toUpperCase()})</h1>
