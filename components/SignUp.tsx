@@ -156,7 +156,23 @@ const Signup:FC = () => {
     return (
         <div className="">
             <div className="py-16">
-                <form className="grid gap-6 max-w-[500px] px-8 py-8 m-auto">
+                <form className="
+                grid 
+                gap-6 
+                max-w-[500px] 
+                px-8 
+                py-8 
+                m-auto 
+                border-2 
+                border-transparent 
+                border-solid 
+                md:border-white 
+                md:shadow-[0px_0px_5px_2px_rgb(192,132,252)] 
+                md:py-16 
+                md:px-12 
+                rounded-lg"
+                >
+                    <h1 className="text-center text-[2rem] font-bold my-4 md:my-0">Sign Up</h1>
                     <p><span>*</span> indicates required field</p>
                     <div>
                         <h3 className="font-bold -mb-4">Personal Information</h3>

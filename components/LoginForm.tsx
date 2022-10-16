@@ -158,7 +158,23 @@ const LoginForm:FC = () => {
     return (
         <div className="">
             <div className="py-16">
-                <form className="grid gap-6 max-w-[500px] px-8 py-8 m-auto">
+                <form className="
+                grid 
+                gap-6 
+                max-w-[500px] 
+                px-8 
+                py-8 
+                m-auto 
+                border-2 
+                border-transparent 
+                border-solid 
+                md:border-white 
+                md:shadow-[0px_0px_5px_2px_rgb(192,132,252)] 
+                md:py-16 
+                md:px-12 
+                rounded-lg"
+                >
+                    <h1 className="text-center text-[2rem] font-bold my-4">Login</h1>
                     <p><span>*</span> indicates required field</p>
                     <div onClick={onClickUsername}>
                         <div className="relative cursor-text">
@@ -207,7 +223,7 @@ const LoginForm:FC = () => {
                         { (isWarning && !username) && 
                             <div className="flex px-4 gap-2 mt-1">
                                 <FontAwesomeIcon icon={faXmark} className={"text-2xl text-red-400"}/>
-                                <p>Enter an email/username.</p>
+                                <p>Enter an email.</p>
                             </div>
                         }
                         { (isWarning && !isEmailFormat && username) && 
@@ -272,7 +288,7 @@ const LoginForm:FC = () => {
                         }
                     </div>
                     <div className="underline hover:text-purple-400 hover:transition-all">
-                        <Link href="">Forgot your password?</Link>
+                        <Link href={("/resetPassword")}>Forgot your password?</Link>
                     </div>
                     <div className={`
                         flex 
@@ -320,7 +336,7 @@ const LoginForm:FC = () => {
                         }
                     </div>
                 </form>
-                <div className="text-center">
+                <div className="text-center md:mt-8">
                     <p>Not a member? 
                         <span className="hover:text-purple-400 hover:transition-all">
                             <Link href={('/newAccount')}> Sign up now</Link>
