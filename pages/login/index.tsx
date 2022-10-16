@@ -12,7 +12,7 @@ const Login = () => {
         if (auth.currentUser) {
             router.replace("/");
         }
-    },[])
+    },[router])
 
     return (
         <>

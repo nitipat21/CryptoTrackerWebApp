@@ -103,6 +103,7 @@ const LoginForm:FC = () => {
         // clear all input
         setUsername("");
         setPassword("");
+        setIsWarning(false);
 
         (async ()=> {
             try{

@@ -47,7 +47,7 @@ const Layout = ({ children }: Props) => {
           }
         })();
       }
-    },[userTrackList])
+    },[dispatch, userTrackList, user, userDocId])
 
     // check auth and get data from localstorage everytime page is refreshed
     useEffect(() => {
@@ -66,7 +66,7 @@ const Layout = ({ children }: Props) => {
         })
     
         return () => unsubscribe()
-    }, [])
+    }, [dispatch])
 
     // clear alert after 3s
     useEffect(()=> {
@@ -75,7 +75,7 @@ const Layout = ({ children }: Props) => {
           dispatch(cryptoSlice.actions.setAlertStatus(""));
         }, 3000)
       }
-    }, [alertStatus])
+    }, [dispatch, alertStatus])
     
     return (
         <div>
