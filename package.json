@@ -21,7 +21,6 @@
     "firebase": "^9.10.0",
     "next": "12.3.1",
     "next-connect": "^1.0.0-next.3",
-    "next-google-fonts": "^2.2.0",
     "next-redux-wrapper": "^8.0.0",
     "react": "18.2.0",
     "react-chartjs-2": "^4.3.1",
