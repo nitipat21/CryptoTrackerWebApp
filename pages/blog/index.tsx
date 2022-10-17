@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { PostCard } from "../../components/PostCard";
 
 const Blog = () => {
     return (
@@ -6,8 +7,14 @@ const Blog = () => {
             <Head>
                 <title>CryptoTracker | Blog</title>
             </Head>
-            <div className="bg-neutral-800">
-                
+            <div className="py-16 grid gap-16">
+                <div className="text-[2rem] text-center"><h1>Blog Posts</h1></div>
+                <div className="grid gap-8 justify-center items-center">
+                    <PostCard/>
+                    <PostCard/>
+                    <PostCard/>
+                    <PostCard/>
+                </div>
             </div>
         </>
     );
