@@ -1,17 +1,13 @@
 import { faMessage } from '@fortawesome/free-regular-svg-icons'
 import { faShare, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 
-export const PostCard = () => {
-
+const FullPost = () => {
   return (
     <div>
-
-        {/* <Link href={("/blog/post-name")}> */}
-
-            <div className='
+        {/* start header section */}
+        <div className='
             bg-neutral-800 
             p-4 
             grid 
@@ -57,11 +53,40 @@ export const PostCard = () => {
                         <span>Share</span>
                     </div>
                 </div>
+                
+                <div>
+                    <div>
+                        <textarea 
+                        className='w-full'
+                        name="comment" 
+                        id="comment" 
+                        maxLength={1000}></textarea>
+                    </div>
+                    <div>
+                        {/* comment tools */}
+                    </div>
+                </div>
 
+        </div>
+        {/* end header section */}
+
+        {/* start comment section */}
+        <div>
+            <div>
+                {/* sort */}
+                <label htmlFor='sortComments'>Sort By:</label>
+                <select name="sortComments" id="sortComments" className='bg-transparent'>
+                    <option>Best</option>
+                    <option>Recent</option>
+                </select>
             </div>
-
-        {/* </Link> */}
-
+            <div>
+                {/* comments container */}
+            </div>
+        </div>
+        {/* end comments section */}
     </div>
   )
 }
+
+export default FullPost

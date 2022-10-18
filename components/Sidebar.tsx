@@ -35,7 +35,7 @@ const Sidebar = () => {
         <div className="md:hidden pb-4">
             <ul className="grid justify-center items-center text-center">
                 <li className={`${rounter.pathname === "/tracker" && "text-purple-400"} text-lg hover:text-purple-400 hover:transition-all p-4`}><Link href="/tracker">Tracker</Link></li>
-                {/* <li className={`${rounter.pathname === "/blog" && "text-purple-400"} hover:text-purple-400 hover:transition-all p-4`}><a href="/blog">Blog</a></li> */}
+                <li className={`${rounter.pathname === "/blog" && "text-purple-400"} hover:text-purple-400 hover:transition-all p-4`}><Link href="/blog">Blog</Link></li>
                 {user ?
                     <>
                         <li className={`${rounter.pathname === "/profile" && "text-purple-400"} text-lg hover:text-purple-400 hover:transition-all p-4`}><Link href="/profile">Profile</Link></li>
