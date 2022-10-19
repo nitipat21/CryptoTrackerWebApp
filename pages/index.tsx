@@ -17,7 +17,7 @@ const Home = ({ coinData, twitterData }: InferGetServerSidePropsType<typeof getS
   dispatch(cryptoSlice.actions.setTwitterList(twitterData.data));
 
   dispatch(cryptoSlice.actions.setTwitterNextToken(twitterData.meta?.next_token));
-
+  
   return (
     <>
       <Head>

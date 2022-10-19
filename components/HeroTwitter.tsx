@@ -23,7 +23,7 @@ const HeroTwitter = () => {
           </div>
         );
     });
-    
+
     const getTweetNextPage = async () => {
         setIsFetching(true);
 

@@ -1,12 +1,13 @@
 import { faMessage } from '@fortawesome/free-regular-svg-icons'
-import { faShare, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+import { faBold, faEllipsis, faItalic, faShare, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React from 'react'
+import CommentCard from './CommentCard'
 
 const FullPost = () => {
   return (
-    <div>
-        {/* start header section */}
+    <div className='grid gap-4'>
+        {/* start post section */}
         <div className='
             bg-neutral-800 
             p-4 
@@ -53,36 +54,54 @@ const FullPost = () => {
                         <span>Share</span>
                     </div>
                 </div>
-                
-                <div>
-                    <div>
-                        <textarea 
-                        className='w-full'
-                        name="comment" 
-                        id="comment" 
-                        maxLength={1000}></textarea>
-                    </div>
-                    <div>
-                        {/* comment tools */}
-                    </div>
-                </div>
 
         </div>
-        {/* end header section */}
+        {/* end post section */}
 
         {/* start comment section */}
-        <div>
+        <div className='bg-neutral-800 p-4 grid gap-4'>
+
+            {/* start comment tools */}
             <div>
-                {/* sort */}
-                <label htmlFor='sortComments'>Sort By:</label>
-                <select name="sortComments" id="sortComments" className='bg-transparent'>
-                    <option>Best</option>
-                    <option>Recent</option>
-                </select>
+                <div>
+                    <textarea 
+                    className='w-full min-h-[160px] align-top p-4 bg-transparent border border-b-0 border-solid border-neutral-600 rounded-t-lg'
+                    name="comment" 
+                    id="comment" 
+                    maxLength={1000}></textarea>
+                </div>
+                <div className='flex items-center gap-4 justify-between py-2 px-4 bg-neutral-900 border border-t-0 border-solid border-transparent rounded-b-xl'>
+                    <div>
+                        {/* <div><FontAwesomeIcon icon={faBold}/></div> */}
+                        {/* <div><FontAwesomeIcon icon={faItalic}/></div> */}
+                        <div><FontAwesomeIcon icon={faEllipsis}/></div>
+                    </div>
+                    <div>
+                        <div>
+                            <button className='px-4 py-1 bg-neutral-600 rounded-xl'>Comment</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {/* end comment tools */}
+            
+            {/* start sort */}
+            <div className='border-solid border-b border-b-neutral-600'>
+                <div className='pb-1'>
+                    <label htmlFor='sortComments'>Sort By:</label>
+                    <select name="sortComments" id="sortComments" className='bg-transparent'>
+                        <option>Best</option>
+                        <option>Recent</option>
+                    </select>
+                </div>
+            </div>
+            {/* end sort */}
+
+            {/* start comments container */}
             <div>
-                {/* comments container */}
+                <CommentCard/>
             </div>
+            {/* end comments container */}
         </div>
         {/* end comments section */}
     </div>
