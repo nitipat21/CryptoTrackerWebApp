@@ -2,16 +2,28 @@ import { faMessage, faShare, faThumbsUp } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import React from 'react'
-import ReplyCard from './ReplyCard'
 
-const CommentCard = () => {
+const ReplyCard = () => {
   return (
-    <div className='flex gap-4'>
+    
+    <div className='flex gap-4 relative'>
+        <div className='
+        border-neutral-700 
+        border-solid 
+        border-b-2 
+        border-l-2
+        absolute 
+        w-[calc(2rem_+_1px)] 
+        -left-[calc(1rem_+_0.5px)] 
+        -translate-x-1/2 
+        -top-4 
+        h-8 
+        rounded-bl-xl'></div>
         <div className='w-[32px] relative'>
             <div className='bg-purple-400 w-8 h-8 rounded-full'>
                 {/* <Image layout='fill' src={("/")}/> */}
             </div>
-            <div className='h-[calc(100%_-_2rem)] border-l-2 border-neutral-700 absolute left-1/2 -translate-x-1/2'></div>
+            {/* <div className='h-[calc(100%_-_2rem)] border-l-2 border-white/30 absolute left-1/2 -translate-x-1/2'></div> */}
         </div>
         <div className='grid gap-4'>
             {/* start header */}
@@ -48,8 +60,7 @@ const CommentCard = () => {
 
             {/* start reply container */}
             <div>
-                <ReplyCard/>
-                <ReplyCard/>
+                
             </div>
             {/* end reply container */}
         </div>
@@ -57,4 +68,4 @@ const CommentCard = () => {
   )
 }
 
-export default CommentCard
+export default ReplyCard

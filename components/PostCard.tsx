@@ -2,14 +2,14 @@ import { faMessage } from '@fortawesome/free-regular-svg-icons'
 import { faShare, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React from 'react'
 
 export const PostCard = () => {
 
   return (
     <div>
 
-        {/* <Link href={("/blog/post-name")}> */}
+        <Link href={("/blog/post")}>
 
             <div className='
             bg-neutral-800 
@@ -60,7 +60,7 @@ export const PostCard = () => {
 
             </div>
 
-        {/* </Link> */}
+        </Link>
 
     </div>
   )

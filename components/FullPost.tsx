@@ -6,7 +6,7 @@ import CommentCard from './CommentCard'
 
 const FullPost = () => {
   return (
-    <div className='grid gap-4'>
+    <div className='grid justify-center gap-4'>
         {/* start post section */}
         <div className='
             bg-neutral-800 
@@ -59,8 +59,17 @@ const FullPost = () => {
         {/* end post section */}
 
         {/* start comment section */}
-        <div className='bg-neutral-800 p-4 grid gap-4'>
-
+        <div className='
+        bg-neutral-800 
+        p-4 
+        grid 
+        gap-4 
+        max-w-[640px]
+        border 
+        border-solid 
+        border-transparent 
+        sm:rounded-lg'
+        >
             {/* start comment tools */}
             <div>
                 <div>
@@ -98,7 +107,8 @@ const FullPost = () => {
             {/* end sort */}
 
             {/* start comments container */}
-            <div>
+            <div className='grid gap-4'>
+                <CommentCard/>
                 <CommentCard/>
             </div>
             {/* end comments container */}

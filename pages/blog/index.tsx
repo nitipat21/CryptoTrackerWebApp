@@ -16,9 +16,6 @@ const Blog = () => {
                     <PostCard/>
                     <PostCard/>
                 </div>
-                <div>
-                    <FullPost/>
-                </div>
             </div>
         </>
     );

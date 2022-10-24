@@ -1,8 +1,11 @@
 import React from 'react'
+import FullPost from '../../components/FullPost';
 
 const Post = () => {
   return (
-    <div>[post]</div>
+    <div>
+      <FullPost/>
+    </div>
   )
 }
 
